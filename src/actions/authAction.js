@@ -17,16 +17,16 @@ import {
   } from 'react-native';
 
 export const emailChanged =(text)=>{
-	return{
-		type:EMAIL_CHANGED,
-		payload:text
-	};
+  return{
+    type:EMAIL_CHANGED,
+    payload:text
+  };
 };
 export const passwordChanged =(text)=>{
-	return{
-		type:PASSWORD_CHANGED,
-		payload:text
-	};
+  return{
+    type:PASSWORD_CHANGED,
+    payload:text
+  };
 };
 export const loginUser =(email,password)=>{
 
@@ -49,31 +49,4 @@ export const loginUser =(email,password)=>{
                }) 
   }
 };
-export const PhoneChanged =(text)=>{
-  return{
-    type:PHONE_CHANGED,
-    payload:text
-  };
-};
-export const MedicalIdChanged =(text)=>{
-  return{
-    type:MEDICALID_CHANGED,
-    payload:text
-  };
-};
-export const SendNewPassword =(phone,medicalId)=>{
-  /*return(dispatch)=>{
-        dispatch({ type:SEND_NEW_PASSWORD });
-        axios.post('',{
-                 phone:phone,
-                 medicalId:medicalId,
-                 
-              })
-              .then(response => {
-                  console.log(response)
-              })
-              .catch(error=>{
-                 console.log(error)
-               }) 
-  }*/
-};
+

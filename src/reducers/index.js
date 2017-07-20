@@ -1,9 +1,11 @@
-import { combineReducers } from 'redux';
+import {combineReducers} from "redux";
+import AuthReducer from './AuthReducer';
 import ChangeLanguageReducer from './ChangeLanguageReducer';
 
-const firstReducer = (state = null, action) => {
-	return state;
-};
+
+
 export default combineReducers({
-	firstReducer: firstReducer
-});
+	auth:AuthReducer,
+	language:ChangeLanguageReducer,
+	
+})
