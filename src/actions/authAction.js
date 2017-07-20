@@ -4,9 +4,6 @@ import {
     LOGIN_USER_SUCCESS,
     LOGIN_USER_FAILED ,
     LOGIN_USER,
-    PHONE_CHANGED,
-    MEDICALID_CHANGED,
-    SEND_NEW_PASSWORD
   } from './types';
 import axios from 'axios';
 import {

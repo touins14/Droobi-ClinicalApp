@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { View, Text } from 'react-native';
+import { View, Text,Image } from 'react-native';
 import { StackNavigator, TabNavigator } from 'react-navigation';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
@@ -11,30 +11,51 @@ import SignInPage from './components/pages/SignInPage';
 import ReportsPage from './components/pages/ReportsPage';
 import PatientsPage from './components/pages/PatientsPage';
 import ChatPage from './components/pages/ChatPage';
-import ReportDetailPage from './components/pages/reportDetailPage';
-import ListViewPage from './components/pages/ListViewPage';
-import configureStore from './configureStore';
+import PatientReportPage from './components/pages/PatientReportPage';
+
 
 
 export const tabsNavigation = TabNavigator({
 	reports: {
 		screen: ReportsPage,
 		navigationOptions: {
-			title: 'reports',
+			title: 'Reports',
+			headerTintColor:"#fff",
+			tabBarIcon: ({ tintColor }) => (
+		      <Image
+		        source={require('./images/medical-grey.png')}
+		        style={{height:30,width:30,tintColor:tintColor}}
+		      />
+		    ),
 			headerStyle: { backgroundColor: '#28c5c2' }
 		}
 	},
 	patients: {
 		screen: PatientsPage,
 		navigationOptions: {
-			title: 'patients',
+			title: 'Patients',
+			headerTintColor:"#fff",
+			tabBarIcon: ({ tintColor }) => (
+		      <Image
+		        source={require('./images/team.png')}
+		        style={{height:30,width:30,tintColor:tintColor}}
+		      />
+		    ),
 			headerStyle: { backgroundColor: '#28c5c2' }
 		}
 	},
 	chat: {
 		screen: ChatPage,
+
 		navigationOptions: {
 			title: 'chat',
+			headerTintColor:"#fff",
+			tabBarIcon: ({ tintColor }) => (
+		      <Image
+		        source={require('./images/chat-grey.png')}
+		        style={{height:30,width:30,tintColor:tintColor}}
+		      />
+		    ),
 			headerStyle: { backgroundColor: '#28c5c2' }
 		}
 	}
@@ -42,36 +63,51 @@ export const tabsNavigation = TabNavigator({
 {
 	initialRouteName: 'reports',
 	animationEnabled: true,
-	swipeEnabled: true
-}
+	swipeEnabled: true,
+	tabBarOptions: {
+	  tabStyle: {
+	    width: 100,    
+	  },
+	  style: {
+	    backgroundColor: '#fff',
+	  },
+	  
+	  showIcon:true,
+	  showLabel:false,
+	  activeTintColor:'#28c5c2',
+	  inactiveTintColor:'grey'
+    }
+
+},
+
+
 );
 
 const Navigator = StackNavigator(
 	{
 		SignInPage: { screen: SignInPage },
 		tabsPage: { screen: tabsNavigation },
-		reportDetailPage: { screen: ReportDetailPage,
+		PatientReportPage: { 
+			screen: PatientReportPage,
 			navigationOptions: {
 				header: null
 			}
-		},
-		listViewPage: { screen: ListViewPage },
+	    },
 	},
-  {
-    initialRouteName: 'SignInPage',
-    cardStyle: {
-        shadowOpacity: 0.5,
+    {
+	    initialRouteName: 'SignInPage',
+	    cardStyle: {
+	        shadowOpacity: 0.5,
+	    },
     },
-  },
-  {
-    transitions: null
+    {
+        transitions: null
 	}
 );
 
-const store = configureStore();
 class App extends Component {
 	render() {
-		// const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+		 const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 		return (
 			<Provider store={store}>
 				<Navigator />

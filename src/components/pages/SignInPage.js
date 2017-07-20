@@ -1,6 +1,6 @@
  import React, { Component } from 'react';
- import { Text, View } from 'react-native';
- import { Button } from '../common';
+ import {Text,View,TouchableOpacity,Dimensions,Image} from 'react-native';
+ import {Container,Input,Button,Spinner} from '../common';
  import { connect } from 'react-redux';
  
  import { emailChanged,passwordChanged,loginUser} from "../../actions/authAction";
@@ -77,7 +77,7 @@
         const { params } = this.props.navigation.state;
         const { navigate } = this.props.navigation;
         if (this.props.navigate==true&& this.props.loading==false){
-	    	navigate('DashboardPage',{title:strings.dashboard})
+	    	navigate('tabsPage')
 	    }
         let direction=this.props.language==="AR"?"right":"left";
         let alignLanguage=this.props.language==="AR"?"flex-start":"flex-end";
