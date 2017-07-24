@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { View, Text,Image } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { StackNavigator, TabNavigator } from 'react-navigation';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
@@ -14,19 +14,18 @@ import ChatPage from './components/pages/ChatPage';
 import PatientReportPage from './components/pages/PatientReportPage';
 
 
-
 export const tabsNavigation = TabNavigator({
 	reports: {
 		screen: ReportsPage,
 		navigationOptions: {
 			title: 'Reports',
-			headerTintColor:"#fff",
+			headerTintColor: '#fff',
 			tabBarIcon: ({ tintColor }) => (
-		      <Image
-		        source={require('./images/medical-grey.png')}
-		        style={{height:30,width:30,tintColor:tintColor}}
-		      />
-		    ),
+				<Image
+					source={require('./images/medical-grey.png')}
+					style={{ height: 30, width: 30, tintColor: tintColor }}
+				/>
+			),
 			headerStyle: { backgroundColor: '#28c5c2' }
 		}
 	},
@@ -34,13 +33,13 @@ export const tabsNavigation = TabNavigator({
 		screen: PatientsPage,
 		navigationOptions: {
 			title: 'Patients',
-			headerTintColor:"#fff",
+			headerTintColor: '#fff',
 			tabBarIcon: ({ tintColor }) => (
-		      <Image
-		        source={require('./images/team.png')}
-		        style={{height:30,width:30,tintColor:tintColor}}
-		      />
-		    ),
+				<Image
+					source={require('./images/team.png')}
+					style={{ height: 30, width: 30, tintColor: tintColor }}
+				/>
+			),
 			headerStyle: { backgroundColor: '#28c5c2' }
 		}
 	},
@@ -49,13 +48,13 @@ export const tabsNavigation = TabNavigator({
 
 		navigationOptions: {
 			title: 'chat',
-			headerTintColor:"#fff",
+			headerTintColor: '#fff',
 			tabBarIcon: ({ tintColor }) => (
-		      <Image
-		        source={require('./images/chat-grey.png')}
-		        style={{height:30,width:30,tintColor:tintColor}}
-		      />
-		    ),
+				<Image
+					source={require('./images/chat-grey.png')}
+					style={{ height: 30, width: 30, tintColor: tintColor }}
+				/>
+			),
 			headerStyle: { backgroundColor: '#28c5c2' }
 		}
 	}
@@ -65,17 +64,17 @@ export const tabsNavigation = TabNavigator({
 	animationEnabled: true,
 	swipeEnabled: true,
 	tabBarOptions: {
-	  tabStyle: {
-	    width: 100,    
-	  },
-	  style: {
-	    backgroundColor: '#fff',
-	  },
-	  
-	  showIcon:true,
-	  showLabel:false,
-	  activeTintColor:'#28c5c2',
-	  inactiveTintColor:'grey'
+		tabStyle: {
+			width: 100,
+		},
+		style: {
+			backgroundColor: '#fff',
+		},
+
+		showIcon: true,
+		showLabel: false,
+		activeTintColor: '#28c5c2',
+		inactiveTintColor: 'grey'
     }
 
 },
@@ -87,18 +86,18 @@ const Navigator = StackNavigator(
 	{
 		SignInPage: { screen: SignInPage },
 		tabsPage: { screen: tabsNavigation },
-		PatientReportPage: { 
+		PatientReportPage: {
 			screen: PatientReportPage,
 			navigationOptions: {
 				header: null
 			}
-	    },
+		},
 	},
     {
-	    initialRouteName: 'SignInPage',
-	    cardStyle: {
-	        shadowOpacity: 0.5,
-	    },
+			initialRouteName: 'SignInPage',
+			cardStyle: {
+				shadowOpacity: 0.5,
+			},
     },
     {
         transitions: null
@@ -107,7 +106,7 @@ const Navigator = StackNavigator(
 
 class App extends Component {
 	render() {
-		 const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+		const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 		return (
 			<Provider store={store}>
 				<Navigator />
