@@ -46,8 +46,8 @@ class ReportsPage extends Component {
          <Item label="Java" value="java" />
          <Item label="JavaScript" value="js" />
        </Picker>
-        <CardBGL data={this.state.data} language='EN' />
-       <ItemMonitoring data={this.state.monitorings} />
+       <CardBGL data={this.state.data} language='EN' />
+       <ItemMonitoring data={this.state.monitorings} /> 
        <Button label="go to PatientReportPage" onPress={() => navigate('PatientReportPage')} />
       </View>
     );
