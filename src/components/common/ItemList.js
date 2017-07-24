@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -26,9 +26,9 @@ const ItemList = ({ titleText, subTitleText, date, status, language }) => {
       }
     };
 
-    const rowDirection = language === "AR" ? 'row-reverse' : 'row';
-    const alignItems = language === "AR" ? 'flex-end':'flex-start';
-    const textAlign = language === "AR" ? 'right' : 'left';
+    const rowDirection = language === 'AR' ? 'row-reverse' : 'row';
+    const alignItems = language === 'AR' ? 'flex-end': 'flex-start';
+    const textAlign = language === 'AR' ? 'right' : 'left';
     return (
         <View style={[itemListConatiner, { flexDirection: rowDirection }]}>
           <View style={DotContainer}>
@@ -52,7 +52,11 @@ const ItemList = ({ titleText, subTitleText, date, status, language }) => {
               <Text style={[dateTitle, { textAlign }]}>{date}</Text>
             </View>
             <View style={arrowContainer}>
-              <Icon name={language === "AR" ? 'ios-arrow-back' : 'ios-arrow-forward'} size={24} color="#9e9e9e" />
+              <Icon
+                name={language === 'AR' ? 'ios-arrow-back' : 'ios-arrow-forward'}
+                size={24}
+                color="#9e9e9e"
+              />
             </View>
           </View>
         </View>
@@ -61,8 +65,10 @@ const ItemList = ({ titleText, subTitleText, date, status, language }) => {
 
 const styles = StyleSheet.create({
   itemListConatiner: {
-    marginBottom: 10,
-    shadowColor: 'rgba(162, 162, 162, 0.70)',
+    margin: 5,
+    marginVertical: 5,
+    marginHorizontal: 10,
+    shadowColor: 'rgba(162, 162, 162, 0.50)',
     shadowOffset: { width: 1, height: 1 },
     shadowOpacity: 1,
     shadowRadius: 2,
