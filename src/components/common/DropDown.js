@@ -6,20 +6,19 @@ import Icon from 'react-native-vector-icons/Ionicons';
 const DropDown = ({ options,onSelect,width}) => {
      const {buttonStyle,textButtonStyle,dropdownStyle} = styles;
      return (
-        
-            <ModalDropdown options={options}
-                    animated={true}
-                    style={[buttonStyle,{width:width}]}
-                    textStyle={textButtonStyle}
-                    dropdownStyle={dropdownStyle}
-                    onSelect={onSelect}
-                    defaultValue={'BeforeLunch'}
-                   />
-        
+       <ModalDropdown options={options}
+          animated={true}
+          style={[buttonStyle,{width:width}]}
+          textStyle={textButtonStyle}
+          dropdownStyle={dropdownStyle}
+          onSelect={onSelect}
+          defaultValue={'BeforeLunch'}
+        />
+
      );
 };
 const styles = {
-     
+
      buttonStyle: {
           backgroundColor:"#ddd",
           borderRadius:15,
@@ -34,9 +33,8 @@ const styles = {
      dropdownStyle:{
       marginTop:7,
       marginLeft:30
-      
+
 
      }
 };
 export { DropDown };
-

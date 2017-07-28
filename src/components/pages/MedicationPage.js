@@ -6,7 +6,8 @@ import { getReportMedication,getPatientMedication} from "../../actions/DoctorAct
 
 
 class MedicationPage extends Component {
-  componentWillMount(){
+  componentWillMount() {
+    console.log(this.props.PatientId);
       this.props.getReportMedication(this.props.ReportId);
       this.props.getPatientMedication(this.props.PatientId);
   }
@@ -15,22 +16,53 @@ class MedicationPage extends Component {
    var extractedDate=date.toLocaleDateString()
     return extractedDate
   }
+  renderMedication(){
+    if (this.props.ReportMedication) {
+      return (
+      <MedicationBlock
+        name={'Glucophage'}
+        showIcon={this.props.ReportMedication.status==='pending'?true:false}
+        times={Object.keys(this.props.ReportMedication.drugs[0].times).map(key => this.props.ReportMedication.drugs[0].times[key])}
+        image={'Glucophage'}
+        unit={'mg'}
+        note={this.props.ReportMedication.notes} />
+                     )
+    } else {
+      return null;
+    }
+  }
+
+  renderMedicationPatient(item) {
+    if (this.props.PatientMedication) {
+      return (
+        <MedicationBlock name={'Glucophage'}
+                         showIcon={false}
+                         times={Object.keys(item.drugs[0].times).map(key => item.drugs[0].times[key])}
+                         image={'Glucophage'}
+                         unit={'mg'}
+                         note={item.drugs[0].note}/>
+      );
+    } else {
+      return null;
+    }
+  }
+
   render() {
+    console.log('HELLO World  ', this.props.PatientMedication);
     return (
       <View style={{paddingTop:20}}>
         <View style={styles.titleContainer}>
             <Text style={styles.titleStyle}>Suggested medication</Text>
         </View>
         {this.props.loaderReportMedication===false?
-        <View style={[styles.globalContainer,{borderColor:"rgb(227, 80, 108)",borderWidth:1,}]}>
-            
-              <MedicationBlock name={this.props.ReportMedication.Drug.tradeName}
+        <View style={[styles.globalContainer,{borderColor:"rgb(227, 80, 108)", borderWidth: 1}]}>
+          {this.renderMedication()}
+              {/* <MedicationBlock name={this.props.ReportMedication.Drugs.tradeName}
                                showIcon={this.props.ReportMedication.status==='pending'?true:false}
-                               times={Object.keys(this.props.ReportMedication.times).map(key => this.props.ReportMedication.times[key])}
+                               times={Object.keys(this.props.ReportMedication.drugs).map(key => this.props.ReportMedication.drugs[key])}
                                image={this.props.ReportMedication.Drug.tradeName}
                                unit={this.props.ReportMedication.Drug.unit}
-                               note={this.props.ReportMedication.notes}/>
-            
+                               note={this.props.ReportMedication.notes} /> */}
          <View style={styles.educatorNameContainer}>
             <Text style={styles.nameEducStyle}>{this.props.educatorName} - {this.extratctDate(this.props.ReportMedication.created_at)}</Text>
          </View>
@@ -41,12 +73,14 @@ class MedicationPage extends Component {
         {this.props.loaderReportPatient===false?
           <View style={[styles.globalContainer,{borderColor:"#28c5c2",borderWidth:1,}]}>
           {this.props.PatientMedication.map(item=>item.status==='current'?
-              <MedicationBlock name={item.Drug.tradeName}
-                               showIcon={false}
-                               times={Object.keys(item.times).map(key => item.times[key])}
-                               image={item.Drug.tradeName}
-                               unit={item.Drug.unit}
-                               note={item.notes}/>
+              this.renderMedicationPatient(item)
+              // <MedicationBlock
+              //   name={'Glucophage'}
+              //   showIcon={false}
+              //   times={Object.keys(item.drugs[0].times).map(key => item.drugs[0].times[key])}
+              //   image={'Glucophage'}
+              //   unit={'mg'}
+              //   note={item.drugs[0].note} />
               :null)}
          <View style={styles.educatorNameContainer}>
             <Text style={styles.nameEducStyle}>{this.props.educatorName} - {this.extratctDate(this.props.PatientMedication.created_at)}</Text>
@@ -58,12 +92,13 @@ class MedicationPage extends Component {
         {this.props.loaderReportPatient===false?
         <View style={[styles.globalContainer]}>
          {this.props.PatientMedication.map(item=>item.status==='finished'?
-              <MedicationBlock name={item.Drug.tradeName}
-                               showIcon={false}
-                               times={Object.keys(item.times).map(key => item.times[key])}
-                               image={item.Drug.tradeName}
-                               unit={item.Drug.unit}
-                               note={item.notes}/>
+              this.renderMedicationPatient()
+              // <MedicationBlock name={'Glucophage'}
+              //                  showIcon={false}
+              //                  times={Object.keys(item.drugs[0].times).map(key => item.drugs[0].times[key])}
+              //                  image={'Glucophage'}
+              //                  unit={'mg'}
+              //                  note={item.drugs[0].note}/>
               :null)}
          <View style={styles.educatorNameContainer}>
             <Text style={styles.nameEducStyle}>{this.props.educatorName} - {this.extratctDate(this.props.PatientMedication.created_at)}</Text>
@@ -121,5 +156,3 @@ const mapStateToProps= state =>{
   }
 }
 export default connect(mapStateToProps,{getPatientMedication,getReportMedication})(MedicationPage);
-
-

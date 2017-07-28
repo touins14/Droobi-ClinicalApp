@@ -209,7 +209,7 @@ export const getPatientMedication =(idPatient)=>{
         dispatch({ type:GET_REPORT_PATIENT});
         axios.get('http://droobi.astrolabs.io:3022/medication/patient/'+idPatient)
             .then(response => {
-                  console.log('Response:',response)
+                  console.log('Response:', response)
                   dispatch({type:GET_REPORT_PATIENT_SUCCESS,payload:response.data})
             })
             .catch(error=>{
