@@ -12,6 +12,12 @@ import ReportsPage from './components/pages/ReportsPage';
 import PatientsPage from './components/pages/PatientsPage';
 import ChatPage from './components/pages/ChatPage';
 import PatientReportPage from './components/pages/PatientReportPage';
+import ProgressListViewPage from './components/pages/ProgressListViewPage';
+import ProfilePatientPage from './components/pages/ProfilePatientPage';
+import ReportPatientPage from './components/pages/ReportPatientPage';
+import MedicalPatientPage from './components/pages/MedicalPatientPage';
+import ReadingPatientPage from './components/pages/ReadingPatientPage';
+import testPage from './components/pages/testPage';
 
 
 export const tabsNavigation = TabNavigator({
@@ -27,7 +33,9 @@ export const tabsNavigation = TabNavigator({
 				/>
 			),
 			headerStyle: { backgroundColor: '#28c5c2' }
-		}
+		},
+		
+
 	},
 	patients: {
 		screen: PatientsPage,
@@ -41,7 +49,9 @@ export const tabsNavigation = TabNavigator({
 				/>
 			),
 			headerStyle: { backgroundColor: '#28c5c2' }
-		}
+		},
+		gesturesEnabled:false,
+        headerBackTitle:null,
 	},
 	chat: {
 		screen: ChatPage,
@@ -56,13 +66,15 @@ export const tabsNavigation = TabNavigator({
 				/>
 			),
 			headerStyle: { backgroundColor: '#28c5c2' }
-		}
+		},
+		gesturesEnabled:false,
+        headerBackTitle:null,
 	}
 },
 {
 	initialRouteName: 'reports',
 	animationEnabled: true,
-	swipeEnabled: true,
+	swipeEnabled: false,
 	tabBarOptions: {
 		tabStyle: {
 			width: 100,
@@ -85,11 +97,78 @@ export const tabsNavigation = TabNavigator({
 const Navigator = StackNavigator(
 	{
 		SignInPage: { screen: SignInPage },
-		tabsPage: { screen: tabsNavigation },
+		tabsPage: { 
+			screen: tabsNavigation,
+			navigationOptions: {
+				gesturesEnabled:false,
+	            headerBackTitle:null,
+	            headerLeft:null,
+	        }
+		 },
 		PatientReportPage: {
 			screen: PatientReportPage,
 			navigationOptions: {
 				header: null
+			}
+		},
+		ProgressListViewPage: {
+			screen: ProgressListViewPage,
+			navigationOptions: {
+				title: 'List View',
+			    headerTintColor: '#fff',
+				gesturesEnabled:false,
+	            headerBackTitle:null,
+	            headerStyle: { backgroundColor: '#28c5c2' }
+			}
+		},
+		ProfilePatientPage: {
+			screen: ProfilePatientPage,
+			navigationOptions: {
+				title: 'Profile',
+			    headerTintColor: '#fff',
+				gesturesEnabled:false,
+	            headerBackTitle:null,
+	            headerStyle: { backgroundColor: '#28c5c2' }
+			}
+		},
+		ReportPatientPage: {
+			screen: ReportPatientPage,
+			navigationOptions: {
+				title: 'Patient Reports',
+			    headerTintColor: '#fff',
+				gesturesEnabled:false,
+	            headerBackTitle:null,
+	            headerStyle: { backgroundColor: '#28c5c2' }
+			}
+		},
+		MedicalPatientPage: {
+			screen: MedicalPatientPage,
+			navigationOptions: {
+				title: 'Medical Plan',
+			    headerTintColor: '#fff',
+				gesturesEnabled:false,
+	            headerBackTitle:null,
+	            headerStyle: { backgroundColor: '#28c5c2' }
+			}
+		},
+		ReadingPatientPage: {
+			screen: ReadingPatientPage,
+			navigationOptions: {
+				title: 'Progress',
+			    headerTintColor: '#fff',
+				gesturesEnabled:false,
+	            headerBackTitle:null,
+	            headerStyle: { backgroundColor: '#28c5c2' }
+			}
+		},
+		testPage: {
+			screen: testPage,
+			navigationOptions: {
+				title: 'test',
+			    headerTintColor: '#fff',
+				gesturesEnabled:false,
+	            headerBackTitle:null,
+	            headerStyle: { backgroundColor: '#28c5c2' }
 			}
 		},
 	},

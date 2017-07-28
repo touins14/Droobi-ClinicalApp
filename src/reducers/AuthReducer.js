@@ -17,7 +17,8 @@ const INITIAL_STATE = {
 	phone: '',
 	medicalId: '',
 	token: '',
-	userId: ''
+	userId: '',
+  TypeUser:''
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -35,7 +36,8 @@ export default (state = INITIAL_STATE, action) => {
         loading: false,
         navigate: true,
         token: action.payload.data.token,
-        userId: action.payload.data.idPatient
+        userId: action.payload.data.id,
+        TypeUser:action.payload.data.type
       };
     case LOGIN_USER_FAILED:
       return { ...state, error: 'login failed', loading: false };

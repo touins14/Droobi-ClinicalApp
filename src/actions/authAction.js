@@ -29,7 +29,7 @@ export const loginUser =(email,password)=>{
 
   return(dispatch)=>{
         dispatch({ type:LOGIN_USER });
-        axios.post('http://droobi.astrolabs.io:3011/patient/authenticate', {
+        axios.post('http://droobi.astrolabs.io:3022/clinician/login', {
             username :email,
             password:password,
           

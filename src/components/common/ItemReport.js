@@ -1,23 +1,23 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image,TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const ItemList = ({ titleText, subTitleText, date, status, language,onPress,picture }) => {
+const ItemReport = ({ titleText, date, time, status, language }) => {
     const {
         itemListConatiner,
         DotContainer,
-        avatarContainer,
         infosContainer,
         textContainer,
         arrowContainer,
-        avatar,
         Title,
         subTitle,
-        dateTitle
+        dateTitle,
+        timeTitle
       } = styles;
+
     const statusDot = () => {
       switch (status) {
-          case 'new':
+          case 'unread':
               return '#078a38';
           case 'pending':
             return '#e66501';
@@ -27,31 +27,20 @@ const ItemList = ({ titleText, subTitleText, date, status, language,onPress,pict
     };
 
     const rowDirection = language === 'AR' ? 'row-reverse' : 'row';
-    const alignItems = language === 'AR' ? 'flex-end': 'flex-start';
+    const alignItems = language === 'AR' ? 'flex-end' : 'flex-start';
     const textAlign = language === 'AR' ? 'right' : 'left';
     return (
-        <TouchableOpacity style={[itemListConatiner, { flexDirection: rowDirection }]}
-                          onPress={onPress}
-                          activeOpacity={1}
-                          >
+        <View style={[itemListConatiner, { flexDirection: rowDirection }]}>
           <View style={DotContainer}>
             <Icon name="ios-radio-button-on" size={16} color={statusDot()} />
           </View>
-          <View style={avatarContainer} >
-            <Image
-              
-              style={avatar}
-              source={{uri:'http://droobi.astrolabs.io/patient_service/public/pictures/'+picture}}
-                width= {60}
-                height= {60}
-            
-            />
-          </View>
           <View style={[infosContainer, { flexDirection: rowDirection }]} >
             <View style={textContainer}>
+              <View style={{ flexDirection: rowDirection, justifyContent: 'flex-start'}}>
+                <Text style={[dateTitle, { textAlign }]}>{date}</Text>
+                <Text style={[timeTitle, { textAlign }]}>{time}</Text>
+              </View>
               <Text style={[Title, { textAlign }]} >{titleText}</Text>
-              <Text style={[subTitle, { textAlign }]}>{subTitleText}</Text>
-              <Text style={[dateTitle, { textAlign }]}>{date}</Text>
             </View>
             <View style={arrowContainer}>
               <Icon
@@ -61,7 +50,7 @@ const ItemList = ({ titleText, subTitleText, date, status, language,onPress,pict
               />
             </View>
           </View>
-        </TouchableOpacity>
+        </View>
     );
 };
 
@@ -70,6 +59,7 @@ const styles = StyleSheet.create({
     margin: 5,
     marginVertical: 5,
     marginHorizontal: 10,
+    paddingVertical: 10,
     shadowColor: 'rgba(162, 162, 162, 0.50)',
     shadowOffset: { width: 1, height: 1 },
     shadowOpacity: 1,
@@ -86,15 +76,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 0
   },
-
-  avatarContainer: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 0,
-    padding: 10
-  },
   infosContainer: {
+    paddingLeft: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -110,19 +93,21 @@ const styles = StyleSheet.create({
     flex: 0,
     paddingHorizontal: 5
   },
-  avatar: {
-    borderRadius: 30
-  },
   Title: {
     color: '#28c5c2',
-    fontSize: 18
+    fontSize: 16
   },
   subTitle: {
   },
   dateTitle: {
     color: '#a0a0a0',
     fontSize: 12
+  },
+  timeTitle: {
+    marginHorizontal: 8,
+    color: '#a0a0a0',
+    fontSize: 12
   }
 });
 
-export { ItemList };
+export { ItemReport };

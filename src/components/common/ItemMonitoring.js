@@ -9,7 +9,7 @@ import BedtimeIcon from '../../images/Bedtime.png';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 
-const ItemMonitoring = ({ data }) => {
+const ItemMonitoring = ({ data,showIcon }) => {
   const {
     cardStyle,
     itemContainer,
@@ -22,78 +22,41 @@ const ItemMonitoring = ({ data }) => {
     statusConatiner,
     labelText,
     unitText } = styles;
-
-  const setTimeIcon = (title) => {
-    switch (title) {
-     case 'After Breakfast':
-       return AfterBreakfastIcon;
-     case 'After Dinner':
-       return AfterDinnerIcon;
-     case 'After Lunch':
-       return AfterLunchIcon;
-     case 'Before Lunch':
-       return BeforeLunchIcon;
-     case 'Before Dinner':
-       return BeforeDinnerIcon;
-     case 'Bedtime':
-       return BedtimeIcon;
-     default:
-       return null;
-    }
-  };
-
-  const itemsRender = (monitorings) => {
-    return (
-    monitorings.map((item) => {
-      console.log(data);
-      return (
+  return (
+    <View style={{ alignSelf:'stretch'}}>
+    {data.map(item=>
+      item.status===true?
         <View style={itemContainer}>
-          <View><Text style={title}> {item.enTitle} </Text></View>
+          <View><Text style={title}>{item.name}</Text></View>
           <View style={textIconConatiner}>
-            <View style={statusConatiner}>
-              <Icon name="ios-radio-button-on" size={16} color='#E70001' />
-            </View>
+            
+                        <View style={statusConatiner}>
+                         {showIcon===true?<Icon name="ios-radio-button-on" size={16} color='#E70001' />:null}
+                        </View>
             <View style={timeIconContainer}>
-              <Image source={setTimeIcon(item.enTitle)} style={timeIcon} resizeMode='contain' />
+              <Image source={{uri:"http://droobi.astrolabs.io/glucose_service/public/meals_icons/"+item.name+".png"}} style={timeIcon} resizeMode='contain' />
             </View>
             <View style={textInfoContainer}>
               <View style={texInfotRow}>
                 <Text style={labelText}>Target:</Text>
-                <Text style={unitText}>{item.target}mg/dL</Text>
+                <Text style={unitText}>{item.max}-{item.min} mg/dL</Text>
               </View>
               <View style={texInfotRow}>
                 <Text style={labelText}>Frequency:</Text>
-                <Text style={unitText}>{item.frequency}</Text>
+                <Text style={unitText}>Daily</Text>
               </View>
             </View>
           </View>
-        </View>
-      );
-    })
-  );
-  };
-  return (
-    <View style={cardStyle}>
-      {itemsRender(data)}
+        </View>:null
+      )}
     </View>
   );
 };
 
 const styles = {
-  cardStyle: {
-    margin: 10,
-    borderRadius: 10,
-    padding: 5,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    shadowColor: 'rgba(162, 162, 162, 0.50)',
-    shadowOffset: { width: 1, height: 1 },
-    shadowOpacity: 1,
-    shadowRadius: 2,
-  },
   itemContainer: {
     flexDirection: 'column',
-    justifyContent: 'flex-start',
+    alignSelf:'stretch',
     height: 80,
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',

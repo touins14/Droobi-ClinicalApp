@@ -44,7 +44,8 @@ const styles = {
           borderRadius: 10,
           padding: 5,
           borderBottomWidth: 1,
-          borderBottomColor: '#ddd'
+          borderBottomColor: '#ddd',
+          backgroundColor:"#fff"
      },
      timeIconContainer: {
        flex: 0,

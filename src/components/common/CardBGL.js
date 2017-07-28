@@ -17,38 +17,21 @@ const CardBGL = ({ data, language }) => {
      const alignItems = language === 'AR' ? 'flex-end' : 'flex-start';
      const textAlign = language === 'AR' ? 'right' : 'left';
      let iconBlood;
-     const setTimeIcon = (title) => {
-       switch (title) {
-        case 'After Breakfast':
-          return AfterBreakfastIcon;
-        case 'After Dinner':
-          return AfterDinnerIcon;
-        case 'After Lunch':
-          return AfterLunchIcon;
-        case 'Before Lunch':
-          return BeforeLunchIcon;
-        case 'Before Dinner':
-          return BeforeDinnerIcon;
-        case 'Bedtime':
-          return BedtimeIcon;
-        default:
-          return null;
-       }
-     };
+     
      return (
        <View style={cardStyle}>
          {
            data.map((item) => {
-             if (item.bloodValue < 150) iconBlood = grayBlood;
-             else if (item.bloodValue >= 150 && item.bloodValue <= 250) iconBlood = greenBlood;
-             else if (item.bloodValue > 250) iconBlood = redBlood;
+             if (item.value < 150) iconBlood = grayBlood;
+             else if (item.value >= 150 && item.value <= 250) iconBlood = greenBlood;
+             else if (item.value > 250) iconBlood = redBlood;
              else iconBlood = '';
              return (
                <ItemBGL
-                icon={setTimeIcon(item.enTitle)}
-                label={item.enTitle}
+                icon={{uri:"http://droobi.astrolabs.io/glucose_service/public/meals_icons/"+item.name+".png"}} 
+                label={item.name}
                 key={item.key}
-                defaultValue={item.bloodValue}
+                defaultValue={item.value}
                 language={language}
                 blood={iconBlood}
                />
@@ -73,7 +56,8 @@ const styles = {
           shadowOpacity: 1,
           shadowRadius: 2,
           borderBottomWidth: 1,
-          borderBottomColor: '#ddd'
+          borderBottomColor: '#ddd',
+          backgroundColor:'#fff'
      }
 };
 export { CardBGL };

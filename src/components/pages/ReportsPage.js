@@ -1,57 +1,68 @@
 import React, { Component } from 'react';
-import { Text, View, Picker } from 'react-native';
-import { Button, ItemList, CardBGL, ItemMonitoring } from '../common';
+import { Text, View, Picker ,ScrollView} from 'react-native';
+import { connect } from 'react-redux';
+import { Button, ItemList, CardBGL, ItemMonitoring,DropDown } from '../common';
+import { getReportsList,SetIdPatient,changeStatusReport,getEducatorReportsList} from "../../actions/DoctorAction";
 const Item = Picker.item;
+
 
 class ReportsPage extends Component {
   constructor(props) {
     super(props);
-    this.state = { data: [{
-      enTitle: 'After Breakfast',
-      key: 1,
-      bloodValue: 120,
-    },
-    {
-      enTitle: 'Bedtime',
-      key: 3,
-      bloodValue: 290,
-    }],
-    monitorings: [
-      {
-        enTitle: 'Before Dinner',
-        target: '100-120',
-        frequency: 'Daily'
-      },
-      {
-        enTitle: 'After Breakfast',
-        target: '140-180',
-        frequency: '1day/week'
-      },
-      {
-        enTitle: 'Before Lunch',
-        target: '120-160',
-        frequency: '3day/week'
-      }
-    ]
-  };
+    this.state = { 
+    };
   }
-
+  componentWillMount(){
+      this.props.TypeUser==='doctor'?this.props.getReportsList(this.props.userId):this.props.getEducatorReportsList(this.props.userId);
+  }
+  extratctDate(date){
+   var  date=new Date(date)
+   var extractedDate=date.toLocaleDateString()
+    return extractedDate
+  }extratctTime(date){
+     var  date=new Date(date)
+     var hours=date.getHours()
+     var min=date.getMinutes()
+    
+    return (hours+":"+min)
+  }
+  changeStatus(idReport,statusReport){
+    if(statusReport=='new'){
+      this.props.changeStatusReport(idReport)
+    }
+  }
   render() {
+    console.log('list reports',this.props.ListReportsEducator)
     const { navigate } = this.props.navigation;
+    let ListReport=this.props.TypeUser==='doctor'?this.props.reportList:this.props.ListReportsEducator
     return (
-      <View>
-       <Text>Reports page </Text>
-       <ItemList titleText='patient1' subTitleText='qweqwe' date='02-03-04' status='unread' />
-       <Picker mode="dropdown">
-         <Item label="Java" value="java" />
-         <Item label="JavaScript" value="js" />
-       </Picker>
-       <CardBGL data={this.state.data} language='EN' />
-       <ItemMonitoring data={this.state.monitorings} /> 
-       <Button label="go to PatientReportPage" onPress={() => navigate('PatientReportPage')} />
-      </View>
+      
+      <ScrollView style={{backgroundColor:"#fff",paddingTop:20}}>
+        <DropDown options={['hgfds','jhsfd','jhsda']}/>
+        {ListReport.map((item,i) =>
+          <ItemList 
+              key={i}
+              picture={item.patient.picture}
+              titleText={item.patient.firstName}
+              subTitleText={this.props.TypeUser==='doctor'?item.educator.firstName:item.doctor.firstName}
+              date={this.extratctDate(item.dateRep)+ "     " +this.extratctTime(item.dateRep) }
+              status={item.statusRep}
+              onPress={() => {this.changeStatus(item.idRep,item.statusRep) 
+                              navigate('PatientReportPage', {idPatient: item.patient._id,idReport:item.idRep}),this.props.SetIdPatient(item.patient._id)}}/>
+        )}
+       <DropDown options={['hgfds','jhsfd','jhsda']}/>
+      </ScrollView>
     );
   }
 }
+const mapStateToProps= state =>{
+  return{
+    language:state.language.language,
+    reportList:state.doctor.ListReports,
+    ListReportsEducator:state.doctor.ListReportsEducator,
+    TypeUser:state.auth.TypeUser,
+    userId:state.auth.userId,
+  }
+}
+export default connect(mapStateToProps,{getReportsList,SetIdPatient,changeStatusReport,getEducatorReportsList})(ReportsPage);
 
-export default ReportsPage;
