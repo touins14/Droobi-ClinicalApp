@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import update from 'react-addons-update';
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
-import {Container,MedicationBlock,ItemReport,Button} from '../common';
+import { Container, MedicationBlock, ItemReport, Button} from '../common';
 import MedicationForm from '../common/MedicationForm';
 import MonitoringForm from '../common/MonitoringForm';
 
@@ -54,7 +54,7 @@ class AddNewReportPage extends Component {
                     <Text style={[styles.oneTabLabel,{color:"#28c5c2"}]}>{strings.monitoring}</Text>
                   </View>;
           return null;
-      } 
+      }
     }
     _renderHeader (props){
 	    let renderIcon;
@@ -71,7 +71,7 @@ class AddNewReportPage extends Component {
 	          indicatorStyle={{backgroundColor:'rgba(40,212,201,1)'}}
 	          renderIcon={renderIcon}
 	          labelStyle={{color:"grey"}}
-	          
+
 	        />
 	      );
     }
@@ -89,7 +89,7 @@ class AddNewReportPage extends Component {
 			           </TouchableOpacity>
 			        </View>
                 </ScrollView>
-                
+
             );
         case '2':
             return (
@@ -113,7 +113,7 @@ class AddNewReportPage extends Component {
             this.state.medications.map((item) => {
               i++;
               return (
-                  <MedicationForm key={i} removing={() => this.removingCard(i)} />
+                  <MedicationForm key={i} removing={() => this.removingCard(i)} onChangeUpdate={(indexMedication, indexPrescription, inputName, inputValue) => { this.updateMedication(indexMedication, indexPrescription, inputName, inputValue); }} />
                 );
             })
 
@@ -135,32 +135,49 @@ class AddNewReportPage extends Component {
         }
     }
     addingCard() {
-	    this.setState({
+      this.setState({
 	      medications: update(this.state.medications, { $push: ['wqe'] }),
-	      monitorings: update(this.state.monitorings, { $push: ['wqe'] })
+	      // monitorings: update(this.state.monitorings, { $push: ['wqe'] })
 	    });
     }
     removingCard(index) {
 	    this.setState({
 	      medications: update(this.state.medications, { $splice: [[index, 1]] }),
-	      monitorings: update(this.state.monitorings, { $splice: [[index, 1]] })
+	      // monitorings: update(this.state.monitorings, { $splice: [[index, 1]] })
 	    })
-    } 
+    }
+
+    updateMedication(indexMedication, indexPrescription, inputName, inputValue) {
+      console.log(indexMedication);
+      console.log(indexPrescription);
+      console.log(inputName);
+      console.log(inputValue);
+      for ( var i = 0; i < this.state.medications.length; i++) {
+        if (inputName === 'medications') {
+          console.log('medications');
+        } else if (inputName === 'note') {
+          console.log('note');
+        } else {
+          console.log('another For');
+        }
+      }
+    }
+
     render() {
 	    return (
 	      <Container >
 	            <View style={styles.sendButtonContainer}>
 	              <Button Style={styles.sendButton}
-	                      color='rgb(227, 80, 108)' 
-	                      label='Send Report' 
+	                      color='rgb(227, 80, 108)'
+	                      label='Send Report'
 	                      />
 	            </View>
-	            <View style={{alignSelf:"stretch",flex:10,backgroundColor:'#fff',marginTop:20}}>
+	            <View style={{alignSelf:"stretch", flex:10, backgroundColor: '#ffffff', marginTop:20 }}>
                     <TabViewAnimated
                         style={{flex:1,marginLeft:10,marginRight:10}}
                         navigationState={this.state}
                         renderScene={this._renderScene.bind(this)}
-                        onRequestChangeTab={this._handleChangeTab.bind(this)} 
+                        onRequestChangeTab={this._handleChangeTab.bind(this)}
                         renderHeader={this._renderHeader.bind(this)}
                       />
                 </View>
@@ -198,13 +215,11 @@ const styles={
       	marginRight:10
     },
     oneTabLabel:{
-      	fontSize:16,
-      	marginTop:5,
+      	fontSize: 16,
+      	marginTop: 5,
     },
 }
 const mapStateToProps= state =>{
   return{}
 }
 export default connect(mapStateToProps,{})(AddNewReportPage);
-
-

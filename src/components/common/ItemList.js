@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image,TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const ItemList = ({ titleText, subTitleText, date, status, language,onPress,picture }) => {
@@ -39,12 +39,12 @@ const ItemList = ({ titleText, subTitleText, date, status, language,onPress,pict
           </View>
           <View style={avatarContainer} >
             <Image
-              
+
               style={avatar}
               source={{uri:'http://droobi.astrolabs.io/patient_service/public/pictures/'+picture}}
                 width= {60}
                 height= {60}
-            
+
             />
           </View>
           <View style={[infosContainer, { flexDirection: rowDirection }]} >

@@ -3,7 +3,7 @@ import { Text, View, TouchableHighlight, TouchableOpacity, TextInput } from 'rea
 import update from 'react-addons-update';
 import Icon from 'react-native-vector-icons/Ionicons';
 import PrescriptionRow from '../common/PrescriptionRow'
-import {DropDown}  from './';
+import { DropDown }  from './';
 
 class MedicationForm extends Component {
   constructor(props) {
@@ -18,6 +18,15 @@ class MedicationForm extends Component {
     });
   }
 
+  getSelectedValue(index, value, inputName) {
+   this.props.onChangeUpdate(this.props.key, null, inputName, value);
+  }
+
+  getInputValue(value) {
+    console.log('textValue:', value);
+    // this.props.onChangeUpdate(this.props.key, null, inputName, value);
+  }
+
   addingPrescreption(value) {
     console.log(value);
     this.setState({
@@ -30,14 +39,14 @@ class MedicationForm extends Component {
       if (this.state.prescriptions) {
         let i = -1;
         return (
-            this.state.prescriptions.map((item) => {
+            this.state.prescriptions.map(( item ) => {
               i++;
               return (
                   <PrescriptionRow
-                          key={i}
-                          addingTime={(value) => { this.addingPrescreption(value); }}
-                          remove
-                          removingTime={() => { this.removingPrescreption(i); }}
+                    key={i}
+                    addingTime={(value) => { this.addingPrescreption(value); }}
+                    remove
+                    removingTime={() => { this.removingPrescreption(i); }}
                   />
                 );
             })
@@ -60,8 +69,8 @@ class MedicationForm extends Component {
             <Text>Medication:</Text>
           </View>
           <View style={bigDropDownContainer}>
-            <View style={bigDropDown}> 
-              <DropDown options={['hgfds','jhsfd','jhsda']} width={100}/>
+            <View style={bigDropDown}>
+              <DropDown options={['hgfds', 'jhsfd', 'jhsda']} width={100} onSelect={(index, value) => this.getSelectedValue(index, value, 'Medication')} />
             </View>
           </View>
         </View>
@@ -72,7 +81,7 @@ class MedicationForm extends Component {
             <Text>Note:</Text>
           </View>
           <View style={bigDropDownContainer}>
-            <TextInput style={bigDropDown} />
+            <TextInput style={bigDropDown} onChangeText={(value) => this.getInputValue(value)} />
           </View>
         </View>
         <View style={{ justifyContent: 'center', alignItems: 'flex-end', paddingHorizontal: 10 }}>
@@ -121,7 +130,7 @@ const styles = {
     width: 200,
     backgroundColor: '#dcdcdc',
     borderRadius: 15,
-    
+
   },
   timeRow: {
     flexDirection: 'row',
