@@ -48,6 +48,9 @@ export const    GET_PATIENT_EDUCATOR_LIST_FAILED="GET_PATIENT_EDUCATOR_LIST_FAIL
 export const    GET_EDUCATOR_LIST_REPORT="GET_EDUCATOR_LIST_REPORT";
 export const    GET_EDUCATOR_LIST_REPORT_SUCCESS="GET_EDUCATOR_LIST_REPORT_SUCCESS";
 export const    GET_EDUCATOR_LIST_REPORT_FAILED="GET_EDUCATOR_LIST_REPORT_FAILED";
+export const    GET_REPORT_PATIENT_LIST="GET_REPORT_PATIENT_LIST";
+export const    GET_REPORT_PATIENT_LIST_SUCCESS="GET_REPORT_PATIENT_LIST_SUCCESS";
+export const    GET_REPORT_PATIENT_LIST_FAILED="GET_REPORT_PATIENT_LIST_FAILED";
 /*export const    ="";
 export const    ="";
 export const    ="";
@@ -59,4 +62,3 @@ export const    ="";
 export const    ="";
 export const    ="";
 */
-

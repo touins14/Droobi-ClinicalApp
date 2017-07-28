@@ -40,7 +40,10 @@ import { GET_LIST_REPORT,
          GET_PATIENT_EDUCATOR_LIST_FAILED,
          GET_EDUCATOR_LIST_REPORT,
          GET_EDUCATOR_LIST_REPORT_SUCCESS,
-         GET_EDUCATOR_LIST_REPORT_FAILED
+         GET_EDUCATOR_LIST_REPORT_FAILED,
+         GET_REPORT_PATIENT_LIST,
+         GET_REPORT_PATIENT_LIST_SUCCESS,
+         GET_REPORT_PATIENT_LIST_FAILED
 
 } from './types';
 import axios from 'axios';
@@ -51,12 +54,12 @@ export const getReportsList =(userId)=>{
         axios.get('http://droobi.astrolabs.io:3022/report/doctor/'+userId)
           .then(response => {
                   console.log('Response:',response)
-                  dispatch({type:GET_LIST_REPORT_SUCCESS,payload:response.data}) 
-                  
+                  dispatch({type:GET_LIST_REPORT_SUCCESS,payload:response.data})
+
               })
               .catch(error=>{
                  dispatch({type:GET_LIST_REPORT_FAILED,payload:error})
-               }) 
+               })
   }
 };
 export const getEducatorReportsList =(userId)=>{
@@ -65,12 +68,12 @@ export const getEducatorReportsList =(userId)=>{
         axios.get('http://droobi.astrolabs.io:3022/report/educator/'+userId)
           .then(response => {
                   console.log('Response:',response)
-                  dispatch({type:GET_EDUCATOR_LIST_REPORT_SUCCESS,payload:response.data}) 
-                  
+                  dispatch({type:GET_EDUCATOR_LIST_REPORT_SUCCESS,payload:response.data})
+
               })
               .catch(error=>{
                  dispatch({type:GET_EDUCATOR_LIST_REPORT_FAILED,payload:error})
-               }) 
+               })
   }
 };
 export const getPatientDetails =(patientId)=>{
@@ -79,12 +82,12 @@ export const getPatientDetails =(patientId)=>{
         axios.get('http://droobi.astrolabs.io:3020/patient/'+patientId)
           .then(response => {
                   console.log('Response:',response)
-                  dispatch({type:GET_PATIENT_DETAILS_SUCCESS,payload:response.data}) 
-                  
+                  dispatch({type:GET_PATIENT_DETAILS_SUCCESS,payload:response.data})
+
               })
               .catch(error=>{
                  dispatch({type:GET_PATIENT_DETAILS_FAILED,payload:error})
-               }) 
+               })
   }
 };
 export const SetIdPatient =(text)=>{
@@ -99,12 +102,12 @@ export const getReportDetails =(ReportId)=>{
         axios.get('http://droobi.astrolabs.io:3022/report/'+ReportId)
           .then(response => {
                   console.log('Response:',response)
-                  dispatch({type:GET_REPORT_DETAILS_SUCCESS,payload:response.data}) 
-                  
+                  dispatch({type:GET_REPORT_DETAILS_SUCCESS,payload:response.data})
+
               })
               .catch(error=>{
                  dispatch({type:GET_REPORT_DETAILS_FAILED,payload:error})
-               }) 
+               })
   }
 };
 
@@ -114,12 +117,12 @@ export const getChartAllCondition =(patientId)=>{
         axios.get('http://droobi.astrolabs.io:3021/stats/patient/'+patientId+'/reading/allConditions')
           .then(response => {
                   console.log('Response:',response)
-                  dispatch({type:GET_CHART_ALL_CONDITION_SUCCESS,payload:response.data}) 
-                  
+                  dispatch({type:GET_CHART_ALL_CONDITION_SUCCESS,payload:response.data})
+
               })
               .catch(error=>{
                  dispatch({type:GET_CHART_ALL_CONDITION_FAILED,payload:error})
-               }) 
+               })
   }
 };
 export const getCharts =(day,condition,patientId)=>{
@@ -128,12 +131,12 @@ export const getCharts =(day,condition,patientId)=>{
         axios.get('http://droobi.astrolabs.io:3021/stats/patient/'+patientId+'/reading/'+condition+'/'+day)
           .then(response => {
                   console.log('Response:',response)
-                  dispatch({type:GET_CHARTS_SUCCESS,payload:response.data}) 
-                  
+                  dispatch({type:GET_CHARTS_SUCCESS,payload:response.data})
+
               })
               .catch(error=>{
                  dispatch({type:GET_CHARTS_FAILED,payload:error})
-               }) 
+               })
   }
 };
 export const getListViewProgress =(patientId,day)=>{
@@ -142,12 +145,12 @@ export const getListViewProgress =(patientId,day)=>{
         axios.get('http://droobi.astrolabs.io:3021/glucose/patient/'+patientId+'/days/'+day)
           .then(response => {
                   console.log('Response:',response)
-                  dispatch({type:GET_LIST_VIEW_PROGRESS_SUCCESS,payload:response.data}) 
-                  
+                  dispatch({type:GET_LIST_VIEW_PROGRESS_SUCCESS,payload:response.data})
+
               })
               .catch(error=>{
                  dispatch({type:GET_LIST_VIEW_PROGRESS_FAILED,payload:error})
-               }) 
+               })
   }
 };
 export const changeStatusReport =(idReport)=>{
@@ -159,31 +162,33 @@ export const changeStatusReport =(idReport)=>{
             })
             .catch(error=>{
                  console.log('Error:',error)
-               }) 
+               })
   }
 };
-export const declineReport =(idReport)=>{
-  return(dispatch)=>{
+export const declineReport = (idReport, note)=>{
+  console.log('declined report ', note);
+  return(dispatch) => {
         dispatch({ type:DECLINE_REPORT});
-        axios.put('http://droobi.astrolabs.io:3022/report/decline/'+idReport)
+        axios.put('http://droobi.astrolabs.io:3022/report/decline/'+idReport, { note })
             .then(response => {
                   console.log('Response:',response)
             })
             .catch(error=>{
                  console.log('Error:',error)
-               }) 
+               })
   }
 };
-export const approveReport =(idReport)=>{
+export const approveReport = (idReport , note ) => {
+  console.log('appprouuving report ', note);
   return(dispatch)=>{
         dispatch({ type:APPROVE_REPORT});
-        axios.put('http://droobi.astrolabs.io:3022/report/accept/'+idReport)
+        axios.put('http://droobi.astrolabs.io:3022/report/accept/'+idReport, { note })
             .then(response => {
                   console.log('Response:',response)
             })
             .catch(error=>{
                  console.log('Error:',error)
-               }) 
+               })
   }
 };
 export const getReportMedication =(idReport)=>{
@@ -192,11 +197,11 @@ export const getReportMedication =(idReport)=>{
         axios.get('http://droobi.astrolabs.io:3022/report/'+idReport+'/medication')
             .then(response => {
                   console.log('Response:',response)
-                  dispatch({type:GET_REPORT_MEDICATION_SUCCESS,payload:response.data}) 
+                  dispatch({type:GET_REPORT_MEDICATION_SUCCESS,payload:response.data})
             })
             .catch(error=>{
                  dispatch({type:GET_REPORT_MEDICATION_FAILED,payload:error})
-               }) 
+               })
   }
 };
 export const getPatientMedication =(idPatient)=>{
@@ -205,11 +210,11 @@ export const getPatientMedication =(idPatient)=>{
         axios.get('http://droobi.astrolabs.io:3022/medication/patient/'+idPatient)
             .then(response => {
                   console.log('Response:',response)
-                  dispatch({type:GET_REPORT_PATIENT_SUCCESS,payload:response.data}) 
+                  dispatch({type:GET_REPORT_PATIENT_SUCCESS,payload:response.data})
             })
             .catch(error=>{
                  dispatch({type:GET_REPORT_PATIENT_FAILED,payload:error})
-               }) 
+               })
   }
 };
 export const getReportSchedule =(idReport)=>{
@@ -218,11 +223,11 @@ export const getReportSchedule =(idReport)=>{
         axios.get('http://droobi.astrolabs.io:3022/report/'+idReport+'/monitoring')
             .then(response => {
                   console.log('Response:',response)
-                  dispatch({type:GET_REPORT_SCHEDULE_SUCCESS,payload:response.data}) 
+                  dispatch({type:GET_REPORT_SCHEDULE_SUCCESS,payload:response.data})
             })
             .catch(error=>{
                  dispatch({type:GET_REPORT_SCHEDULE_FAILED,payload:error})
-               }) 
+               })
   }
 };
 export const getPatientSchedule =(idPatient)=>{
@@ -231,11 +236,11 @@ export const getPatientSchedule =(idPatient)=>{
         axios.get('http://droobi.astrolabs.io:3021/measuresTimes/patient/'+idPatient)
             .then(response => {
                   console.log('Response:',response)
-                  dispatch({type:GET_PATIENT_SCHEDULE_SUCCESS,payload:response.data}) 
+                  dispatch({type:GET_PATIENT_SCHEDULE_SUCCESS,payload:response.data})
             })
             .catch(error=>{
                  dispatch({type:GET_PATIENT_SCHEDULE_FAILED,payload:error})
-               }) 
+               })
   }
 };
 export const getPatientList =(userId)=>{
@@ -244,11 +249,11 @@ export const getPatientList =(userId)=>{
         axios.get('http://droobi.astrolabs.io:3022/doctor/'+userId+'/patients')
             .then(response => {
                   console.log('Response:',response)
-                  dispatch({type:GET_PATIENT_LIST_SUCCESS,payload:response.data}) 
+                  dispatch({type:GET_PATIENT_LIST_SUCCESS,payload:response.data})
             })
             .catch(error=>{
                  dispatch({type:GET_PATIENT_LIST_FAILED,payload:error})
-               }) 
+               })
   }
 };
 export const getPatientEducatorList =(userId)=>{
@@ -257,14 +262,24 @@ export const getPatientEducatorList =(userId)=>{
         axios.get('http://droobi.astrolabs.io:3022/educator/'+userId+'/patients')
             .then(response => {
                   console.log('Response:',response)
-                  dispatch({type:GET_PATIENT_EDUCATOR_LIST_SUCCESS,payload:response.data}) 
+                  dispatch({type:GET_PATIENT_EDUCATOR_LIST_SUCCESS,payload:response.data})
             })
             .catch(error=>{
                  dispatch({type:GET_PATIENT_EDUCATOR_LIST_FAILED,payload:error})
-               }) 
+               })
   }
 };
-
-
-
-
+// EN COURS DE CONSTRUCTION
+export const getReportsPatientList = (userId) => {
+  return (dispatch) => {
+        dispatch({ type:GET_REPORT_PATIENT_LIST});
+        axios.get('http://droobi.astrolabs.io:3022/doctor/'+userId+'/patients')
+            .then(response => {
+                  console.log('Response:',response)
+                  dispatch({type: GET_REPORT_PATIENT_LIST_SUCCESS,payload: response.data})
+            })
+            .catch(error => {
+                 dispatch({type: GET_REPORT_PATIENT_LIST_FAILED,payload: error})
+               })
+  }
+};

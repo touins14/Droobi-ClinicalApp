@@ -14,7 +14,7 @@ const PopUp = ({ visible, title, subTitle, onChangeValue, onAccept, onRefuse, de
 
   const renderTitle = () => {
     if (title) {
-      return (<Text style={{ fontSize: 16, texAlign: 'center' }}>{title}</Text>);
+      return (<Text style={{ fontSize: 16, textAlign: 'center' }}>{title}</Text>);
     }
     return;
   };

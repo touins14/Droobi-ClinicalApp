@@ -8,24 +8,27 @@ import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 import ProgressPage from './ProgressPage';
 import MedicationPage from './MedicationPage';
 import SchedulePage from './SchedulePage';
-import {Container,Button} from '../common';
-import { getReportsList,getPatientDetails,getReportDetails,declineReport,approveReport} from "../../actions/DoctorAction";
+import { Container, Button, PopUp } from '../common';
+import { getReportsList, getPatientDetails, getReportDetails, declineReport, approveReport } from '../../actions/DoctorAction';
 
 class PatientReportPage extends Component {
     constructor(props) {
-   	    super()
-        this.state =  {
-	        index: 0,
-	          routes: [
-	            { key: '1' },
-	            { key: '2'},
-	            { key: '3'}
-	          ],
+      super();
+      this.state = {
+        index: 0,
+        modalVisible: false,
+        status: null,
+        noteValue: null,
+        routes: [
+          { key: '1' },
+          { key: '2' },
+          { key: '3' }
+        ],
         };
     }
-    componentWillMount(){
-      var idPatient=`${this.props.navigation.state.params.idPatient}`
-      var idReport=`${this.props.navigation.state.params.idReport}`
+    componentWillMount() {
+      var idPatient = `${this.props.navigation.state.params.idPatient}`
+      var idReport = `${this.props.navigation.state.params.idReport}`
       this.props.getPatientDetails(idPatient);
       this.props.getReportDetails(idReport);
     }
@@ -70,7 +73,7 @@ class PatientReportPage extends Component {
 	                  <Text style={[styles.oneTabLabel,{color:"#949799"}]}>Schedule</Text>
 	                </View>;
 	        return null;
-	    } 
+	    }
 	}
 	_renderthirdGreen({route}) {
         switch (route.key) {
@@ -90,8 +93,8 @@ class PatientReportPage extends Component {
 	                  <Text style={[styles.oneTabLabel,{color:"#28c5c2"}]}>Schedule</Text>
 	                </View>;
 	        return null;
-	    } 
-	} 
+	    }
+	}
 	_renderHeader (props){
 		let renderIcon;
 		if (this.state.index===0){
@@ -109,7 +112,7 @@ class PatientReportPage extends Component {
 	        indicatorStyle={{backgroundColor:'rgba(40,212,201,1)'}}
 	        renderIcon={renderIcon}
 	        labelStyle={{color:"grey"}}
-	        
+
 	      />
 	    );
     }
@@ -124,8 +127,8 @@ class PatientReportPage extends Component {
 	        case '2':
 		        return (
 		            <MedicationPage ReportId={`${this.props.navigation.state.params.idReport}`} educatorName={this.props.loader===false?this.props.reportDetail[0].educator.firstName+'  '+this.props.reportDetail[0].educator.lastName:''}/>
-			            
-			        
+
+
 		        );
 		    case '3':
 		        return (
@@ -135,38 +138,71 @@ class PatientReportPage extends Component {
 	            return null;
 	    }
     }
-    renderButtons(){
-    	if(this.props.TypeUser=='doctor'){
-    		if(this.props.loader===true)
-    			{return null}
-    		else
-    			if(this.props.reportDetail[0].report.status=='declined'|| this.props.reportDetail[0].report.status==='accepted')
-		            	{
-		            	  return null	
-		            	}
+    renderPopUp(value) {
+      const idReport = `${this.props.navigation.state.params.idReport}`;
+      if (this.state.modalVisible) {
+        if (this.state.status ){
+          return (
+             <PopUp
+               visible={this.state.modalVisible}
+               title='You are about to approve the report'
+               subTitle='You can leave a comment before approuving'
+               onChangeValue={(value) => { this.setState({ noteValue: value }); }}
+               onAccept={(note) => { this.setState({ modalVisible: false }); this.props.approveReport(idReport, this.state.noteValue); }}
+               onRefuse={(note) => { this.setState({ modalVisible: false }); }}
+               defaultValue='comment here'
+             />
+           );
+        } else {
+          return (
+            <PopUp
+              visible={this.state.modalVisible}
+              title='You are about to decline the report'
+              subTitle='You can leave a comment before declining'
+              onChangeValue={(value) => { this.setState({ noteValue: value }); }}
+              onAccept={(note) => { this.setState({ modalVisible: false }); this.props.declineReport(idReport, this.state.noteValue); }}
+              onRefuse={(note) => { this.setState({ modalVisible: false }); }}
+              defaultValue='comment here'
+            />
+          );
+        }
+
+      }
+      return null
+    }
+
+    renderButtons() {
+      if (this.props.TypeUser == 'doctor') {
+        if (this.props.loader === true)
+          { return null }
+    		else if (this.props.reportDetail[0].report.status == 'declined'|| this.props.reportDetail[0].report.status === 'accepted')
+          {
+            return null
+          }
 		        else return(
-		        	    <View style={styles.buttonsConfirmationContainer}>
-		            		<Button Style={styles.declineButton} color='#fff'label='Decline' onPress={()=>{this.props.declineReport(idReport)}}/>
-		            		<Button Style={styles.approveButton} color='#fff'label='Approve' onPress={()=>{this.props.approveReport(idReport)}}/>
-		            	</View>
-		        	)        
-		                
+              <View style={styles.buttonsConfirmationContainer}>
+                <Button Style={styles.declineButton} color='#fff' label='Decline' onPress={() => { this.setState({ modalVisible: true, status: false});this.renderPopUp(false)}} />
+                {/* <Button Style={styles.declineButton} color='#fff'label='Decline' onPress={()=>{this.props.declineReport(idReport)}}/> */}
+                <Button Style={styles.approveButton} color='#fff' label='Approve' onPress={() => { this.setState({ modalVisible: true, status: true});this.renderPopUp(true)}} />
+                {/* <Button Style={styles.approveButton} color='#fff'label='Approve' onPress={()=>{this.props.approveReport(idReport)}}/> */}
+              </View>
+            )
+
     	}else {
     		if(this.props.loader===true)
-                  {return null} 
-            else    
+                  {return null}
+            else
 
-            	if(this.props.reportDetail[0].report.status=='declined' )
+            	if(this.props.reportDetail[0].report.status === 'declined' )
 		            	{
 		            	  return <Button Style={styles.declineButton} color='#fff'label='Decline' />
 		            	}
-		        else if(this.props.reportDetail[0].report.status=='accepted' ) 
+		        else if(this.props.reportDetail[0].report.status=='accepted' )
 		        	   {return<Button Style={styles.approveButton} color='#fff'label='Approve' />}
-		        else return null    	  	   
-    	}     
+		        else return null
+    	}
     }
     render() {
-    	
     	var idReport=`${this.props.navigation.state.params.idReport}`
 	    const { goBack } = this.props.navigation;
         const Patient=this.props.patientDetail;
@@ -177,10 +213,10 @@ class PatientReportPage extends Component {
 		            stickyHeaderHeight={ STICKY_HEADER_HEIGHT }
 		            parallaxHeaderHeight={ PARALLAX_HEADER_HEIGHT }
 		            backgroundSpeed={10}
-		            
+
 		            renderBackground={() => (
 		              <View key="background">
-		                
+
 		                <View style={{position: 'absolute',
 		                              top: 0,
 		                              width: window.width,
@@ -191,7 +227,7 @@ class PatientReportPage extends Component {
 
 		            renderForeground={() => (
 		              <View key="parallax-header" style={ styles.parallaxHeader }>
-		                
+
 			                <View style={styles.headerDetail}>
 			                    <View style={styles.firstHeaderDetail}>
 			                        <Image  source={require('../../images/profilePhoto.jpg')}style={styles.profilePic}/>
@@ -215,13 +251,12 @@ class PatientReportPage extends Component {
 			                  			             name={this.props.reportDetail[0].educator.firstName}
 			                  		/>}
 			                </View>
-		                
+
 		              </View>
 		          )}
 
 		            renderStickyHeader={() => (
 		              <View key="sticky-header" style={styles.stickySection}>
-		                
 		              </View>
 		            )}
 
@@ -236,22 +271,23 @@ class PatientReportPage extends Component {
 		                    <Text style={{fontSize:20,color:"#fff"}}>PatientReport</Text>
 		                </View>
 		                <View style={{flex:1,alignItems:'center',justifyContent:'center'}}></View>
-		               
+
 		              </View>
 		            )}
-		        
+
 		            >
-		            
+
 		            {this.renderButtons()}
 		            <View style={{alignSelf:"stretch"}}>
 		            <TabViewAnimated
 	                      style={{flex:1,marginLeft:10,marginRight:10}}
 	                      navigationState={this.state}
 	                      renderScene={this._renderScene.bind(this)}
-	                      onRequestChangeTab={this._handleChangeTab.bind(this)} 
+	                      onRequestChangeTab={this._handleChangeTab.bind(this)}
 	                      renderHeader={this._renderHeader.bind(this)}
 	                    />
-	                </View>
+	               </View>
+                 { this.renderPopUp() }
 		        </ParallaxScrollView>
 	        </Container>
 	    );
@@ -274,10 +310,11 @@ const EducatorNoteBloc = (props) => {
             <View style={styles.noteCreactor}>
                 <Image  source={props.image}style={styles.noteCreatorImage}/>
                 <Text   style={styles.nameNoteCreator}>{props.name}</Text>
-            </View>     
+            </View>
        </View>
     );
 };
+
 const window = Dimensions.get('window');
 const PARALLAX_HEADER_HEIGHT = 400;
 const STICKY_HEADER_HEIGHT = 70;
@@ -364,7 +401,7 @@ const styles={
     	borderBottomWidth:0.5,
     	borderBottomColor:"#fff",
     	flexDirection:'row',
-    	
+
     	alignItems:'center',
     },
     textDetail:{
@@ -378,12 +415,12 @@ const styles={
           marginRight:15,
           marginLeft:15 ,
           marginTop:10,
-          padding:5,          
+          padding:5,
           shadowColor: '#ddd',
           shadowOffset: {
                width: 3,
                height: 3
-          },          
+          },
           shadowOpacity: 1.9
     },
     noteContainer:{
@@ -463,4 +500,3 @@ export default connect(mapStateToProps,{getReportsList,
 	                                   declineReport,
 	                                   approveReport
 	                               })(PatientReportPage);
-

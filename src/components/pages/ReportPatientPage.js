@@ -4,7 +4,10 @@ import { connect } from 'react-redux';
 import {Container,MedicationBlock,ItemReport} from '../common';
 
 class ReportPatientPage extends Component {
-  
+  componentWillMount() {
+    this.props.getPatientList(this.props.userId);
+  }
+
   render() {
     return (
       <View style={{paddingTop:20}}>
@@ -17,9 +20,7 @@ const styles={
 }
 const mapStateToProps= state =>{
   return{
-    
+
   }
 }
 export default connect(mapStateToProps,{})(ReportPatientPage);
-
-

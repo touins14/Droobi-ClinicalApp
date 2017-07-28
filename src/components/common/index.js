@@ -12,4 +12,4 @@ export * from './Chart';
 export * from './MedicationBlock';
 export * from './ProfileElement';
 export * from './ItemReport';
-
+export * from './PopUp';
