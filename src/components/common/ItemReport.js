@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image,TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const ItemReport = ({ titleText, date, time, status, language }) => {
@@ -30,7 +30,7 @@ const ItemReport = ({ titleText, date, time, status, language }) => {
     const alignItems = language === 'AR' ? 'flex-end' : 'flex-start';
     const textAlign = language === 'AR' ? 'right' : 'left';
     return (
-        <View style={[itemListConatiner, { flexDirection: rowDirection }]}>
+        <TouchableOpacity style={[itemListConatiner, { flexDirection: rowDirection }]}>
           <View style={DotContainer}>
             <Icon name="ios-radio-button-on" size={16} color={statusDot()} />
           </View>
@@ -50,7 +50,7 @@ const ItemReport = ({ titleText, date, time, status, language }) => {
               />
             </View>
           </View>
-        </View>
+        </TouchableOpacity>
     );
 };
 

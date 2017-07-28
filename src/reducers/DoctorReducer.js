@@ -38,7 +38,10 @@ import {
          GET_PATIENT_EDUCATOR_LIST_FAILED,
          GET_EDUCATOR_LIST_REPORT,
          GET_EDUCATOR_LIST_REPORT_SUCCESS,
-         GET_EDUCATOR_LIST_REPORT_FAILED
+         GET_EDUCATOR_LIST_REPORT_FAILED,
+         GET_REPORT_PATIENT_LIST,
+         GET_REPORT_PATIENT_LIST_SUCCESS,
+         GET_REPORT_PATIENT_LIST_FAILED
 
 } from '../actions/types';
 
@@ -61,7 +64,8 @@ const INITIAL_STATE = {
   PatientMonitoring:[],
   ReportMonitoring:[],
   ListPatient:[],
-  ListPatientEducator:[]
+  ListPatientEducator:[],
+  PatientListReport:[]
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -133,7 +137,12 @@ export default (state = INITIAL_STATE, action) => {
     case GET_PATIENT_EDUCATOR_LIST_SUCCESS:
       return { ...state, ListPatientEducator: action.payload };
 
+    case GET_REPORT_PATIENT_LIST:
+        return { ...state, loadingListPatientReport: action.payload };
 
+     case GET_REPORT_PATIENT_LIST_SUCCESS:
+        return { ...state, PatientListReport: action.payload };
+ 
     default:
       return state;
     }

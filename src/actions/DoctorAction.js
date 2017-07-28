@@ -270,10 +270,10 @@ export const getPatientEducatorList =(userId)=>{
   }
 };
 // EN COURS DE CONSTRUCTION
-export const getReportsPatientList = (userId) => {
+export const getReportsPatientList = (PatientId) => {
   return (dispatch) => {
         dispatch({ type:GET_REPORT_PATIENT_LIST});
-        axios.get('http://droobi.astrolabs.io:3022/doctor/'+userId+'/patients')
+        axios.get('http://droobi.astrolabs.io:3022/report/patient/'+PatientId)
             .then(response => {
                   console.log('Response:',response)
                   dispatch({type: GET_REPORT_PATIENT_LIST_SUCCESS,payload: response.data})
