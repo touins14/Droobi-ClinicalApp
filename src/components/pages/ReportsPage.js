@@ -3,6 +3,7 @@ import { Text, View, Picker ,ScrollView} from 'react-native';
 import { connect } from 'react-redux';
 import { Button, ItemList, CardBGL, ItemMonitoring,DropDown } from '../common';
 import { getReportsList,SetIdPatient,changeStatusReport,getEducatorReportsList} from "../../actions/DoctorAction";
+import Icon from 'react-native-vector-icons/Ionicons';
 const Item = Picker.item;
 
 
@@ -38,7 +39,7 @@ class ReportsPage extends Component {
     return (
       
       <ScrollView style={{backgroundColor:"#fff",paddingTop:20}}>
-        <DropDown options={['hgfds','jhsfd','jhsda']}/>
+       
         {ListReport.map((item,i) =>
           <ItemList 
               key={i}
@@ -50,7 +51,8 @@ class ReportsPage extends Component {
               onPress={() => {this.changeStatus(item.idRep,item.statusRep) 
                               navigate('PatientReportPage', {idPatient: item.patient._id,idReport:item.idRep}),this.props.SetIdPatient(item.patient._id)}}/>
         )}
-       <DropDown options={['hgfds','jhsfd','jhsda']}/>
+
+       
       </ScrollView>
     );
   }

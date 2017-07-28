@@ -67,12 +67,12 @@ class ProfilePatientPage extends Component {
 		            <View style={styles.titleStyleContainer}>
 		                <Text style={styles.titleStyle}>Medical situation</Text>
 		            </View>
-		             <ProfileElement 
+		            <ProfileElement 
 	                            showFirstIcon={true}
 	                            iconOne={require('../../images/graphGreen.png')}
-	                            labelOne='Readings'
+	                            labelOne='Reading History'
 	                            icontwo={require('../../images/syringeGreen.png')}
-	                            labeltwo='Medical plan'
+	                            labeltwo='Health plan'
 	                            iconthree={require('../../images/careplan.png')}
 	                            labelthree='Reports'
 	                            title={strings.medical}
@@ -81,6 +81,7 @@ class ProfilePatientPage extends Component {
                                 goReports={() => navigate('ReportPatientPage')}
 	                            />
 		          </View>
+                  {this.props.TypeUser=='doctor'?null:<Button label='new report' onPress={() => navigate('AddNewReportPage')}/>}
 		    </ParallaxScrollView>
 		</Container>
     );
@@ -217,7 +218,8 @@ const mapStateToProps= state =>{
   return{
     PatientId:state.doctor.PatientId,
     patientDetail:state.doctor.PatientDetails,
-    LoaderPatientDetails:state.doctor.LoaderPatientDetails
+    LoaderPatientDetails:state.doctor.LoaderPatientDetails,
+    TypeUser:state.auth.TypeUser,
   }
 }
 export default connect(mapStateToProps,{getPatientDetails})(ProfilePatientPage);

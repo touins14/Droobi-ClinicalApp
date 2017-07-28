@@ -1,30 +1,41 @@
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity,View } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-const DropDown = ({ options,onSelect}) => {
+const DropDown = ({ options,onSelect,width}) => {
      const {buttonStyle,textButtonStyle,dropdownStyle} = styles;
      return (
-     <ModalDropdown options={options}
+        
+            <ModalDropdown options={options}
                     animated={true}
-                    style={buttonStyle}
+                    style={[buttonStyle,{width:width}]}
                     textStyle={textButtonStyle}
                     dropdownStyle={dropdownStyle}
                     onSelect={onSelect}
+                    defaultValue={'BeforeLunch'}
                    />
+        
      );
 };
 const styles = {
      
      buttonStyle: {
-          //backgroundColor:"#000"
+          backgroundColor:"#ddd",
+          borderRadius:15,
+          justifyContent:'center',
+          alignItems:'center',
+          flex:1
      },
      textButtonStyle:{
-        color:"grey",
-        fontSize:14,
+        color:"black",
+        fontSize:10,
      },
      dropdownStyle:{
-      width:100
+      marginTop:7,
+      marginLeft:30
+      
+
      }
 };
 export { DropDown };

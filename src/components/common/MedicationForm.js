@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableHighlight, TouchableOpacity, TextInput } from 'react-native';
 import update from 'react-addons-update';
-import DropDown, {
-  Select,
-  Option,
-  OptionList,
-} from 'react-native-selectme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import PrescriptionRow from '../common/PrescriptionRow'
-// import SelectMenu from '../common/SelectMenu'
+import {DropDown}  from './';
 
 class MedicationForm extends Component {
   constructor(props) {
@@ -65,7 +60,9 @@ class MedicationForm extends Component {
             <Text>Medication:</Text>
           </View>
           <View style={bigDropDownContainer}>
-            <TextInput style={bigDropDown} />
+            <View style={bigDropDown}> 
+              <DropDown options={['hgfds','jhsfd','jhsda']} width={100}/>
+            </View>
           </View>
         </View>
         {this.renderPrescriptions()}
@@ -118,12 +115,13 @@ const styles = {
      flex: 0
   },
   bigDropDown:
-  {
+  { justifyContent:'center',
+    alignItems:'center',
     height: 30,
     width: 200,
     backgroundColor: '#dcdcdc',
     borderRadius: 15,
-    paddingLeft: 15
+    
   },
   timeRow: {
     flexDirection: 'row',

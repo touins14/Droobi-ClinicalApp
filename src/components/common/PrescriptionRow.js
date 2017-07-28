@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableHighlight, TouchableOpacity, TextInput } from 'react-native';
+import {DropDown}  from './';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 class PrescriptionRow extends Component {
@@ -39,8 +40,11 @@ class PrescriptionRow extends Component {
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', flex: 0 }}>
           <View style={mediumDropContainer}>
-            <TextInput  style={mediumDrop} value={this.state.timeValue} onChangeText={(text) => this.setState({ timeValue: text })} />
+            <View  style={mediumDrop} >
+              <DropDown options={['hgfds','jhsfd','jhsda']} width={60}/>
+            </View>
           </View>
+            
           <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', flex: 0 }}>
             <TextInput style={unitInput} value={this.state.unitValue} onChangeText={(text) => this.setState({ unitValue: text })} />
             <TextInput style={smallDrop} value={this.state.unit} onChangeText={(text) => this.setState({ unit: text })} />
@@ -51,6 +55,7 @@ class PrescriptionRow extends Component {
   }
 }
 
+          
 const styles = {
 
   timeRow: {
@@ -73,7 +78,6 @@ const styles = {
     width: 100,
     backgroundColor: '#dcdcdc',
     borderRadius: 15,
-    fontSize: 14,
     paddingLeft: 15
   },
   unitInput: {

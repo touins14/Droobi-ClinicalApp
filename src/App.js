@@ -18,7 +18,7 @@ import ReportPatientPage from './components/pages/ReportPatientPage';
 import MedicalPatientPage from './components/pages/MedicalPatientPage';
 import ReadingPatientPage from './components/pages/ReadingPatientPage';
 import testPage from './components/pages/testPage';
-
+import AddNewReportPage from './components/pages/AddNewReportPage';
 
 export const tabsNavigation = TabNavigator({
 	reports: {
@@ -155,6 +155,16 @@ const Navigator = StackNavigator(
 			screen: ReadingPatientPage,
 			navigationOptions: {
 				title: 'Progress',
+			    headerTintColor: '#fff',
+				gesturesEnabled:false,
+	            headerBackTitle:null,
+	            headerStyle: { backgroundColor: '#28c5c2' }
+			}
+		},
+		AddNewReportPage: {
+			screen: AddNewReportPage,
+			navigationOptions: {
+				title: 'New Report',
 			    headerTintColor: '#fff',
 				gesturesEnabled:false,
 	            headerBackTitle:null,
