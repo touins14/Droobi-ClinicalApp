@@ -17,7 +17,7 @@ const MedicationBlock = (props) => {
               <View style={styles.imageContainer}>
                 <Image source={{uri:'http://droobi.astrolabs.io/medication_service/public/drugs/'+props.image+'.png'}}
                        style={styles.imageStyle}
-                       resizeMode='center'
+                       resizeMode='cover'
                        />
               </View>
              <View style={[styles.detailContainer,{alignItems:alignItems}]}>
@@ -28,7 +28,7 @@ const MedicationBlock = (props) => {
                       <Text style={{fontSize:13,color:"grey",marginRight:10,fontWeight:"600"}}>{props.language==="AR"?item.arName:item.name}</Text>
                       <Text style={{fontSize:12,color:"grey"}}>{item.value} {props.unit}</Text>
                     </View>:null)}
-                 
+
              </View>
         </View>
         <View style={[styles.secondView,{flexDirection:flexDirection,alignItems:'flex-end'}]}>
@@ -36,7 +36,7 @@ const MedicationBlock = (props) => {
               <Text style={{fontSize:12,color:"grey",marginLeft:10,marginRight:10}}>{props.note}</Text>
         </View>
      </View>
-      
+
      );
 
 };
@@ -51,7 +51,7 @@ const styles={
            borderBottomColor:'#ddd',
            borderBottomWidth:0.5,
            padding:10,
-           
+
       },
       firstView:{
          flex:2,
@@ -91,7 +91,7 @@ const styles={
      },
      listTakeContainer:{
           alignSelf:'stretch',
-        
+
           //flexDirection:"row",
      },
      imageStyle:{
@@ -100,4 +100,3 @@ const styles={
      }
 }
 export { MedicationBlock };
-

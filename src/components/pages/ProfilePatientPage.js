@@ -12,7 +12,7 @@ class ProfilePatientPage extends Component {
   }
   render() {
       const { navigate } = this.props.navigation;
-      const Patient=this.props.patientDetail;
+      const Patient = this.props.patientDetail;
     return (
     	<Container>
             <ParallaxScrollView
@@ -20,10 +20,10 @@ class ProfilePatientPage extends Component {
 		            stickyHeaderHeight={ 70 }
 		            parallaxHeaderHeight={ PARALLAX_HEADER_HEIGHT }
 		            backgroundSpeed={10}
-		            
+
 		            renderBackground={() => (
 		              <View key="background">
-		                
+
 		                <View style={{position: 'absolute',
 		                              top: 0,
 		                              width: window.width,
@@ -34,10 +34,10 @@ class ProfilePatientPage extends Component {
 
 		            renderForeground={() => (
 		              <View key="parallax-header" style={ styles.parallaxHeader }>
-		                
+
 			                <View style={styles.headerDetail}>
 			                    <View style={styles.firstHeaderDetail}>
-			                        <Image  source={require('../../images/profilePhoto.jpg')}style={styles.profilePic}/>
+			                        <Image source={{ uri: 'http://droobi.astrolabs.io/patient_service/public/pictures/'+Patient.picture }} style={styles.profilePic}/>
 			                        <Text style={styles.name}>{Patient.firstName}</Text>
 			                        <Text style={styles.name}>{Patient.lastName}</Text>
 			                    </View>
@@ -50,10 +50,10 @@ class ProfilePatientPage extends Component {
 			                         <DetailBloc FirstLabel='BMI' SecondLabel={Patient.bmi.value}/>
 			                         <DetailBloc FirstLabel='Cholestrol' SecondLabel={Patient.cholesterol.value}/>
 			                    </View>:null}
-			                    
+
 			                </View>
-			                
-		                
+
+
 		              </View>
 		            )}>
 		          <View style={{marginTop:20}}>
@@ -67,7 +67,7 @@ class ProfilePatientPage extends Component {
 		            <View style={styles.titleStyleContainer}>
 		                <Text style={styles.titleStyle}>Medical situation</Text>
 		            </View>
-		            <ProfileElement 
+		            <ProfileElement
 	                            showFirstIcon={true}
 	                            iconOne={require('../../images/graphGreen.png')}
 	                            labelOne='Reading History'
@@ -120,16 +120,22 @@ const styles={
 	    flexDirection: 'column',
 	    paddingTop: 2,
 	    paddingBottom:20,
-	    
-	
-      
-	},
-    headerDetail:{
-    	//backgroundColor:"pink",
-     	alignSelf:'stretch',
-     	flexDirection:'row',
 
-     	
+
+
+	},
+    headerDetail: {
+    	//backgroundColor:"pink",
+     	alignSelf: 'stretch',
+     	flexDirection: 'row',
+      paddingBottom: 10,
+      paddingRight: 8,
+      backgroundColor: '#fff',
+      shadowColor: 'rgba(162, 162, 162, 0.50)',
+      shadowOffset: { width: 1, height: 1 },
+      shadowOpacity: 1,
+      shadowRadius: 2,
+
     },
     SubHeaderDetail:{
        flex:2,
@@ -167,10 +173,8 @@ const styles={
     DetailBlocStyle:{
     	height:27,
     	alignSelf:'stretch',
-    	borderBottomWidth:0.5,
-    	borderBottomColor:"#fff",
     	flexDirection:'row',
-    	borderBottomColor:'grey',
+    	borderBottomColor:'#dcdcdc',
     	borderBottomWidth:0.5,
     	alignItems:'center',
     	marginRight:10
@@ -179,7 +183,7 @@ const styles={
     	fontSize:14,
     	color:'grey',
     },
-    
+
     titleStyleContainer:{
     	alignSelf:'stretch',
     	padding:10
@@ -197,13 +201,11 @@ const styles={
         borderRadius:10,
         padding:10,
         marginBottom:10,
-        shadowColor: '#ddd',
-        shadowOffset: {
-            width: 3,
-            height: 3},
-		        
-        shadowRadius: 10,
-        shadowOpacity: 2
+        shadowColor: 'rgba(162, 162, 162, 0.50)',
+        shadowOffset: { width: 1, height: 1 },
+        shadowOpacity: 1,
+        shadowRadius: 2,
+
     },
     CareTeamStyle:{
     	alignSelf:'stretch',
@@ -212,7 +214,7 @@ const styles={
     	height:60,
     	flexDirection:'row'
     }
-    
+
 }
 const mapStateToProps= state =>{
   return{
@@ -223,4 +225,3 @@ const mapStateToProps= state =>{
   }
 }
 export default connect(mapStateToProps,{getPatientDetails})(ProfilePatientPage);
-

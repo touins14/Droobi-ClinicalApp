@@ -78,7 +78,8 @@ class ProgressPage extends Component {
                     width={window.width-50}
                     loadMinimalSize={2}
                     loadMinimal={true}
-                    >
+                    nextButton={<Text style={styles.buttonText}>›</Text>}
+                    prevButton={<Text style={styles.buttonText}>‹</Text>}>
 		        <View style={styles.slide}>
               <Condition
                 label='All Conditions'
@@ -117,16 +118,17 @@ class ProgressPage extends Component {
                              this.props.getCharts(this.state.filterDay,"Before Dinner",this.props.PatientId)
                              }}
                   />
-		        </View>
-		        <View style={styles.slide}>
-                <Condition label='Bedtime'
-                           clickedStyle={this.state.filterCondition==='Bedtime'?styles.clickedCondition:null}
-                           image={require('../../images/After-dinner.png')}
-                           onPress={()=>{this.setState({filterCondition:"Bedtime"})
+                  <Condition label='Bedtime'
+                             clickedStyle={this.state.filterCondition==='Bedtime'?styles.clickedCondition:null}
+                             image={require('../../images/Bedtime.png')}
+                             onPress={()=>{this.setState({filterCondition:"Bedtime"})
 
-                           this.props.getCharts(this.state.filterDay,"Bedtime",this.props.PatientId)
-                          }}
-                />
+                             this.props.getCharts(this.state.filterDay,"Bedtime",this.props.PatientId)
+                            }}
+                  />
+		        </View>
+		        <View style={[styles.slide,{justifyContent:'flex-start'}]}>
+
 		              {/* <Condition label='After Dinner'
                              clickedStyle={this.state.filterCondition==='After Dinner'?styles.clickedCondition:null}
                              image={require('../../images/Before-dinner.png')}
@@ -136,7 +138,7 @@ class ProgressPage extends Component {
                   /> */}
                   <Condition label='Fasting'
                              clickedStyle={this.state.filterCondition==='Fasting'?styles.clickedCondition:null}
-                             image={require('../../images/After-breakfast.png')}
+                             image={require('../../images/Fasting.png')}
                              onPress={()=>{this.setState({filterCondition:"Fasting"})
                              this.props.getCharts(this.state.filterDay,"Fasting",this.props.PatientId)
                              }}
@@ -314,6 +316,10 @@ const styles={
           },
           shadowOpacity: 1.9,
           alignItems:'center'
+      },
+      buttonText: {
+        color: '#dcdcdc',
+        fontSize: 36
       }
 
 }

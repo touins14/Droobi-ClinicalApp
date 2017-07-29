@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Text, View ,ScrollView,Image} from 'react-native';
 import { connect } from 'react-redux';
-import {Container,MedicationBlock} from '../common';
-import { getReportMedication,getPatientMedication} from "../../actions/DoctorAction";
+import {Container, MedicationBlock} from '../common';
+import { getReportMedication, getPatientMedication} from "../../actions/DoctorAction";
 
 
 class MedicationPage extends Component {
@@ -20,12 +20,12 @@ class MedicationPage extends Component {
     if (this.props.ReportMedication) {
       return (
       <MedicationBlock
-        name={'Glucophage'}
+        name={this.props.ReportMedication.drugs[0].drug.tradeName}
         showIcon={this.props.ReportMedication.status==='pending'?true:false}
         times={Object.keys(this.props.ReportMedication.drugs[0].times).map(key => this.props.ReportMedication.drugs[0].times[key])}
-        image={'Glucophage'}
-        unit={'mg'}
-        note={this.props.ReportMedication.notes} />
+        image={this.props.ReportMedication.drugs[0].drug.tradeName}
+        unit={this.props.ReportMedication.drugs[0].drug.unit}
+        note={this.props.ReportMedication.drugs[0].note} />
                      )
     } else {
       return null;
@@ -35,7 +35,9 @@ class MedicationPage extends Component {
   renderMedicationPatient(item) {
     if (this.props.PatientMedication) {
       return (
-        <MedicationBlock name={'Glucophage'}
+        <MedicationBlock
+          key={item.drugs[0].drug}
+          name={'Glucophage'}
                          showIcon={false}
                          times={Object.keys(item.drugs[0].times).map(key => item.drugs[0].times[key])}
                          image={'Glucophage'}
@@ -92,7 +94,7 @@ class MedicationPage extends Component {
         {this.props.loaderReportPatient===false?
         <View style={[styles.globalContainer]}>
          {this.props.PatientMedication.map(item=>item.status==='finished'?
-              this.renderMedicationPatient()
+              this.renderMedicationPatient(item)
               // <MedicationBlock name={'Glucophage'}
               //                  showIcon={false}
               //                  times={Object.keys(item.drugs[0].times).map(key => item.drugs[0].times[key])}
