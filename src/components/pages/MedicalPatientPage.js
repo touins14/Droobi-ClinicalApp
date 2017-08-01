@@ -77,13 +77,13 @@ class MedicalPatientPage extends Component {
           case '1':
             return (
                 <ScrollView>
-                  <MedicationPage educatorName={this.props.loader===false?this.props.reportDetail[0].educator.firstName+'  '+this.props.reportDetail[0].educator.lastName:''}/>      
+                  <MedicationPage educatorName={this.props.loader===false?this.props.reportDetail[0].educator.firstName+'  '+this.props.reportDetail[0].educator.lastName:''} suggestedMedication={false}/>      
                 </ScrollView>
                 
             );
         case '2':
             return (
-                <ScrollView><SchedulePage/></ScrollView>
+                <ScrollView><SchedulePage suggestedMonitoring={false}/></ScrollView>
             );
           default:
               return null;

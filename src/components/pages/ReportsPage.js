@@ -33,7 +33,7 @@ class ReportsPage extends Component {
     }
   }
   render() {
-    console.log('list reports',this.props.ListReportsEducator)
+   
     const { navigate } = this.props.navigation;
     let ListReport=this.props.TypeUser==='doctor'?this.props.reportList:this.props.ListReportsEducator
     return (
@@ -46,10 +46,11 @@ class ReportsPage extends Component {
               picture={item.patient.picture}
               titleText={item.patient.firstName}
               subTitleText={this.props.TypeUser==='doctor'?item.educator.firstName:item.doctor.firstName}
-              date={this.extratctDate(item.dateRep)+ "     " +this.extratctTime(item.dateRep) }
+              date={this.props.language==="EN"? this.extratctDate(item.dateRep)+ "     " +this.extratctTime(item.dateRep) :this.extratctTime(item.dateRep)+ "     " +this.extratctDate(item.dateRep)}
               status={item.statusRep}
               onPress={() => {this.changeStatus(item.idRep,item.statusRep) 
-                              navigate('PatientReportPage', {idPatient: item.patient._id,idReport:item.idRep}),this.props.SetIdPatient(item.patient._id)}}/>
+                              navigate('PatientReportPage', {idPatient: item.patient._id,idReport:item.idRep}),this.props.SetIdPatient(item.patient._id)}}
+              language={this.props.language}/>
         )}
 
        

@@ -60,16 +60,18 @@ class ProgressListViewPage extends Component {
   render() {
     let alignItems=this.props.language==='AR'?"flex-end":"flex-start"
     return (
+      <Container>
       <ScrollView>
           {this.props.listViewProgress.map(item =>
             <View style={styles.GlobalBlock} key={item._id}>
               <View style={{alignSelf:"stretch",alignItems:alignItems}}>
                 <Text style={{fontSize:16,color:'grey',marginLeft:15,marginRight:15}}>{this.getDate(item.dateGlucose)}</Text>
               </View>
-              <CardBGL data={Object.keys(item.times).reverse().map(key => item.times[key])}  language='EN' /> 
+              <CardBGL data={Object.keys(item.times).reverse().map(key => item.times[key])}  language={this.props.language} /> 
             </View>
           )}
       </ScrollView>
+      </Container>
     );
   }
 }

@@ -41,7 +41,10 @@ import {
          GET_EDUCATOR_LIST_REPORT_FAILED,
          GET_REPORT_PATIENT_LIST,
          GET_REPORT_PATIENT_LIST_SUCCESS,
-         GET_REPORT_PATIENT_LIST_FAILED
+         GET_REPORT_PATIENT_LIST_FAILED,
+         GET_PATIENT_CARE_TEAM,
+         GET_PATIENT_CARE_TEAM_SUCCESS,
+         GET_PATIENT_CARE_TEAM_FAILED
 
 } from '../actions/types';
 
@@ -53,6 +56,7 @@ const INITIAL_STATE = {
   PatientId:'',
   Charts:[],
   loader:true,
+  loaderReportDetail:true,
   loaderReportPatient:true,
   loaderReportMedication:true,
   loaderReportMonitoring:true,
@@ -65,7 +69,9 @@ const INITIAL_STATE = {
   ReportMonitoring:[],
   ListPatient:[],
   ListPatientEducator:[],
-  PatientListReport:[]
+  PatientListReport:[],
+  PatientCareTeam:[],
+  loaderPatientCareTeam:true
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -84,10 +90,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, PatientDetails: action.payload, LoaderPatientDetails: false};
 
     case GET_REPORT_DETAILS:
-      return {...state,loader:true}
+      return {...state,loaderReportDetail:true}
 
     case GET_REPORT_DETAILS_SUCCESS:
-      return { ...state, ReportDetails: action.payload ,loader:false};
+      return { ...state, ReportDetails: action.payload ,loaderReportDetail:false};
 
     case GET_CHART_ALL_CONDITION:
        return {...state,loader:true}
@@ -140,9 +146,15 @@ export default (state = INITIAL_STATE, action) => {
     case GET_REPORT_PATIENT_LIST:
         return { ...state, loadingListPatientReport: action.payload };
 
-     case GET_REPORT_PATIENT_LIST_SUCCESS:
+    case GET_REPORT_PATIENT_LIST_SUCCESS:
         return { ...state, PatientListReport: action.payload };
- 
+
+    case GET_PATIENT_CARE_TEAM:
+        return { ...state,loaderPatientCareTeam:true};
+
+    case GET_PATIENT_CARE_TEAM_SUCCESS:
+        return { ...state, PatientCareTeam: action.payload ,loaderPatientCareTeam:false};
+
     default:
       return state;
     }

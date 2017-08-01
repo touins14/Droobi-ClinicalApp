@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Text, View ,ScrollView,Image} from 'react-native';
 import { connect } from 'react-redux';
-import {Container,MedicationBlock} from '../common';
-import { getReportMedication,getPatientMedication} from "../../actions/DoctorAction";
-
+import {Container, MedicationBlock} from '../common';
+import { getReportMedication, getPatientMedication} from "../../actions/DoctorAction";
+import strings from '../common/Translation';
 
 class MedicationPage extends Component {
   componentWillMount() {
@@ -17,100 +17,85 @@ class MedicationPage extends Component {
     return extractedDate
   }
   renderMedication(){
-    if (this.props.ReportMedication) {
-      return (
-      <MedicationBlock
-        name={'Glucophage'}
-        showIcon={this.props.ReportMedication.status==='pending'?true:false}
-        times={Object.keys(this.props.ReportMedication.drugs[0].times).map(key => this.props.ReportMedication.drugs[0].times[key])}
-        image={'Glucophage'}
-        unit={'mg'}
-        note={this.props.ReportMedication.notes} />
-                     )
-    } else {
-      return null;
-    }
+  
+      return this.props.ReportMedication.drugs.map(item=>
+        <MedicationBlock
+          data={item}
+          showIcon={this.props.ReportMedication.status==='pending'?true:false}
+          
+          language={this.props.language} />
+      
+      )
+      
   }
 
-  renderMedicationPatient(item) {
-    if (this.props.PatientMedication) {
-      return (
-        <MedicationBlock name={'Glucophage'}
-                         showIcon={false}
-                         times={Object.keys(item.drugs[0].times).map(key => item.drugs[0].times[key])}
-                         image={'Glucophage'}
-                         unit={'mg'}
-                         note={item.drugs[0].note}/>
-      );
-    } else {
-      return null;
-    }
+  renderCurrentMedicationPatient() {
+    return this.props.PatientMedication.map(item=>
+      item.status==='current'?
+
+      <View style={[styles.globalContainer,{borderColor:"#28c5c2",borderWidth:1,}]}>
+          {item.drugs.map(item2=>
+            <MedicationBlock
+              data={item2}
+              showIcon={false}
+              language={this.props.language} />
+          
+          )}
+        <View style={styles.educatorNameContainer}>
+          <Text style={styles.nameEducStyle}>{this.props.educatorName} - {this.extratctDate(item.created_at)}</Text>
+        </View>
+      </View>:null)
+      
+  }
+  renderPreviousMedicationPatient() {
+    return this.props.PatientMedication.map(item=>
+      item.status==="finished"?
+
+      <View style={[styles.globalContainer,{borderColor:"#ddd",borderWidth:1,}]}>
+          {item.drugs.map(item2=>
+            <MedicationBlock
+              data={item2}
+              showIcon={false}
+              language={this.props.language} />
+          
+          )}
+        <View style={styles.educatorNameContainer}>
+          <Text style={styles.nameEducStyle}>{this.props.educatorName} - {this.extratctDate(item.created_at)}</Text>
+        </View>
+      </View>:null)
+      
   }
 
   render() {
-    console.log('HELLO World  ', this.props.PatientMedication);
+    let alignItems=this.props.language==='AR'?"flex-end":"flex-start"
     return (
       <View style={{paddingTop:20}}>
-        <View style={styles.titleContainer}>
-            <Text style={styles.titleStyle}>Suggested medication</Text>
+        <View style={[styles.titleContainer,{alignItems:alignItems}]}>
+           {this.props.suggestedMedication===true? <Text style={styles.titleStyle}>{strings.suggestedMedication}</Text>:null}
         </View>
         {this.props.loaderReportMedication===false?
-        <View style={[styles.globalContainer,{borderColor:"rgb(227, 80, 108)", borderWidth: 1}]}>
-          {this.renderMedication()}
-              {/* <MedicationBlock name={this.props.ReportMedication.Drugs.tradeName}
-                               showIcon={this.props.ReportMedication.status==='pending'?true:false}
-                               times={Object.keys(this.props.ReportMedication.drugs).map(key => this.props.ReportMedication.drugs[key])}
-                               image={this.props.ReportMedication.Drug.tradeName}
-                               unit={this.props.ReportMedication.Drug.unit}
-                               note={this.props.ReportMedication.notes} /> */}
-         <View style={styles.educatorNameContainer}>
-            <Text style={styles.nameEducStyle}>{this.props.educatorName} - {this.extratctDate(this.props.ReportMedication.created_at)}</Text>
-         </View>
-        </View>:null}
-        <View style={styles.titleContainer}>
-            <Text style={styles.titleStyle}>Current medication</Text>
+          <View style={[styles.globalContainer,{borderColor:"rgb(227, 80, 108)", borderWidth: 1}]}>
+              {this.renderMedication()}
+              <View style={styles.educatorNameContainer}>
+                <Text style={styles.nameEducStyle}>{this.props.educatorName} - {this.extratctDate(this.props.ReportMedication.created_at)}</Text>
+              </View>
+          </View>:null}
+
+        <View style={[styles.titleContainer,{alignItems:alignItems}]}>
+            <Text style={styles.titleStyle}>{strings.currentMedication}</Text>
         </View>
-        {this.props.loaderReportPatient===false?
-          <View style={[styles.globalContainer,{borderColor:"#28c5c2",borderWidth:1,}]}>
-          {this.props.PatientMedication.map(item=>item.status==='current'?
-              this.renderMedicationPatient(item)
-              // <MedicationBlock
-              //   name={'Glucophage'}
-              //   showIcon={false}
-              //   times={Object.keys(item.drugs[0].times).map(key => item.drugs[0].times[key])}
-              //   image={'Glucophage'}
-              //   unit={'mg'}
-              //   note={item.drugs[0].note} />
-              :null)}
-         <View style={styles.educatorNameContainer}>
-            <Text style={styles.nameEducStyle}>{this.props.educatorName} - {this.extratctDate(this.props.PatientMedication.created_at)}</Text>
-         </View>
-        </View>:null}
-        <View style={styles.titleContainer}>
-            <Text style={styles.titleStyle}>Previous medication</Text>
+        {this.props.loaderReportPatient===false?this.renderCurrentMedicationPatient():null}
+        <View style={[styles.titleContainer,{alignItems:alignItems}]}>
+            <Text style={styles.titleStyle}>{strings.previousMedication}</Text>
         </View>
-        {this.props.loaderReportPatient===false?
-        <View style={[styles.globalContainer]}>
-         {this.props.PatientMedication.map(item=>item.status==='finished'?
-              this.renderMedicationPatient()
-              // <MedicationBlock name={'Glucophage'}
-              //                  showIcon={false}
-              //                  times={Object.keys(item.drugs[0].times).map(key => item.drugs[0].times[key])}
-              //                  image={'Glucophage'}
-              //                  unit={'mg'}
-              //                  note={item.drugs[0].note}/>
-              :null)}
-         <View style={styles.educatorNameContainer}>
-            <Text style={styles.nameEducStyle}>{this.props.educatorName} - {this.extratctDate(this.props.PatientMedication.created_at)}</Text>
-         </View>
-        </View>:null}
+        {this.props.loaderReportPatient===false?this.renderPreviousMedicationPatient():null}
       </View>
     );
   }
 }
 const styles={
-	globalContainer:{
-	   alignSelf:'stretch',
+  globalContainer:{
+     alignSelf:'stretch',
        justifyContent:'center',
        alignItems:'center',
        marginRight:5,
@@ -125,23 +110,23 @@ const styles={
             height: 1.5
         },
         shadowOpacity: 1.9,
-	},
-	titleContainer:{
+  },
+  titleContainer:{
         alignSelf:'stretch',
         padding:10,
-	},
-	educatorNameContainer:{
+  },
+  educatorNameContainer:{
         alignSelf:'stretch',
         padding:10,
-	},
-	titleStyle:{
-		fontSize:18,
-		color:'grey'
-	},
-	nameEducStyle:{
-		fontSize:14,
-		color:'grey'
-	}
+  },
+  titleStyle:{
+    fontSize:18,
+    color:'grey'
+  },
+  nameEducStyle:{
+    fontSize:14,
+    color:'grey'
+  }
 }
 const mapStateToProps= state =>{
   return{

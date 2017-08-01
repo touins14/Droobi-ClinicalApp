@@ -5,15 +5,15 @@ import strings from './Translation';
 
 
 const ProfileElement = ({language,title,labelOne,iconOne,labeltwo,icontwo,labelthree,iconthree, showIcon,showFirstIcon,onPress,goReading,goMedical,goReports}) => {
-	
+
 	let flexDirection= language=="AR"?'row-reverse':"row";
 	let justifyContent= language=="AR"?'flex-end':"flex-start";
   let alignItems= language=="AR"?'flex-end':"flex-start";
   let goToIconName=language=="AR"?'ios-arrow-back':"ios-arrow-forward";
-   
+
 	return (
 	<View style={styles.GlobalContainer}>
-	    
+
         <View style={styles.shadowContainer}>
             <OneItem language={language}
                      showFirstIcon={showFirstIcon}
@@ -39,8 +39,8 @@ const ProfileElement = ({language,title,labelOne,iconOne,labeltwo,icontwo,labelt
                      onPress={goReports}
                      />
 
-        </View>	
-		
+        </View>
+
 	</View>
 	);
 };
@@ -48,12 +48,12 @@ const OneItem=(props)=>{
 
     let goToIconName=props.language=="AR"?'ios-arrow-back':"ios-arrow-forward";
     let firstIcon=props.showFirstIcon==true?
-    
+
         <View style={{flex:1,alignItems:"center",justifyContent:"center"}}>
-           <Image style={styles.IconStyle} source={props.icon}/>	
+           <Image style={styles.IconStyle} source={props.icon}/>
         </View>:null
     return (
-	<TouchableOpacity 
+	<TouchableOpacity
           style={[styles.OneItemContainer,{flexDirection:props.flexDirection}]}
           onPress={props.onPress}
           activeOpacity={1}
@@ -66,11 +66,11 @@ const OneItem=(props)=>{
         <View style={{flex:1,alignItems:"center",justifyContent:"center"}}>
 	           <Icon  name={goToIconName} style={styles.GoIconStyle}/>
         </View>
-     		
+
 	</TouchableOpacity>);
 };
 const styles = {
-    
+
     GlobalContainer:{
     	alignSelf:"stretch",
     	marginRight:10,
@@ -79,7 +79,7 @@ const styles = {
     	padding:10,
     },
 	shadowContainer:{
-           
+
            alignSelf:'stretch',
            backgroundColor:'#fff',
            marginLeft:5,
@@ -88,14 +88,10 @@ const styles = {
            borderRadius:10,
            padding:10,
            marginBottom:10,
-           
-           shadowColor: '#ddd',
-               shadowOffset: {
-                    width: 3,
-                    height: 3
-               },
-               shadowRadius: 10,
-               shadowOpacity: 2
+					 shadowColor: 'rgba(162, 162, 162, 0.50)',
+	         shadowOffset: { width: 1, height: 1 },
+	         shadowOpacity: 1,
+	         shadowRadius: 2
 	},
 	OneItemContainer:{
 		height:40,
@@ -121,7 +117,7 @@ const styles = {
 		height:25,
 		width:25,
 	},
-	
+
 
 };
 export { ProfileElement };

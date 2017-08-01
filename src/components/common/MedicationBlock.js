@@ -15,28 +15,28 @@ const MedicationBlock = (props) => {
                   <Icon name="ios-radio-button-on" size={16} color="rgb(227, 80, 108)" />
                 </View>:null}
               <View style={styles.imageContainer}>
-                <Image source={{uri:'http://droobi.astrolabs.io/medication_service/public/drugs/'+props.image+'.png'}}
+                <Image source={{uri:'http://droobi.astrolabs.io/medication_service/public/drugs/'+props.data.drug.tradeName+'.png'}}
                        style={styles.imageStyle}
                        resizeMode='center'
                        />
               </View>
              <View style={[styles.detailContainer,{alignItems:alignItems}]}>
-                <Text style={styles.nameStyle}>{props.name}</Text>
-                  {props.times.map(item=>
+                <Text style={styles.nameStyle}>{props.data.drug.tradeName}</Text>
+                  {Object.keys(props.data.times).map(key => props.data.times[key]).map(item=>
                     item.status===true?
                     <View style={[styles.listTakeContainer,{flexDirection:flexDirection}]} key={item.name}>
                       <Text style={{fontSize:13,color:"grey",marginRight:10,fontWeight:"600"}}>{props.language==="AR"?item.arName:item.name}</Text>
-                      <Text style={{fontSize:12,color:"grey"}}>{item.value} {props.unit}</Text>
+                      <Text style={{fontSize:12,color:"grey"}}>{item.value} {props.data.drug.unit}</Text>
                     </View>:null)}
-                 
+
              </View>
         </View>
         <View style={[styles.secondView,{flexDirection:flexDirection,alignItems:'flex-end'}]}>
               <Text style={{fontSize:14,color:"grey"}}>{strings.note }</Text>
-              <Text style={{fontSize:12,color:"grey",marginLeft:10,marginRight:10}}>{props.note}</Text>
+              <Text style={{fontSize:12,color:"grey",marginLeft:10,marginRight:10}}>{props.data.note}</Text>
         </View>
      </View>
-      
+
      );
 
 };
@@ -51,7 +51,7 @@ const styles={
            borderBottomColor:'#ddd',
            borderBottomWidth:0.5,
            padding:10,
-           
+
       },
       firstView:{
          flex:2,
@@ -91,13 +91,12 @@ const styles={
      },
      listTakeContainer:{
           alignSelf:'stretch',
-        
+
           //flexDirection:"row",
      },
      imageStyle:{
-       height:100,
-       width:150
+       height:50,
+       width:60
      }
 }
 export { MedicationBlock };
-

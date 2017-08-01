@@ -43,7 +43,10 @@ import { GET_LIST_REPORT,
          GET_EDUCATOR_LIST_REPORT_FAILED,
          GET_REPORT_PATIENT_LIST,
          GET_REPORT_PATIENT_LIST_SUCCESS,
-         GET_REPORT_PATIENT_LIST_FAILED
+         GET_REPORT_PATIENT_LIST_FAILED,
+         GET_PATIENT_CARE_TEAM,
+         GET_PATIENT_CARE_TEAM_SUCCESS,
+         GET_PATIENT_CARE_TEAM_FAILED
 
 } from './types';
 import axios from 'axios';
@@ -78,15 +81,25 @@ export const getEducatorReportsList =(userId)=>{
 };
 export const getPatientDetails =(patientId)=>{
   return(dispatch)=>{
-        dispatch({ type:GET_PATIENT_DETAILS});
+        dispatch({ type:GET_PATIENT_DETAILS})
         axios.get('http://droobi.astrolabs.io:3020/patient/'+patientId)
-          .then(response => {
+              .then(response => {
                   console.log('Response:',response)
                   dispatch({type:GET_PATIENT_DETAILS_SUCCESS,payload:response.data})
 
               })
               .catch(error=>{
                  dispatch({type:GET_PATIENT_DETAILS_FAILED,payload:error})
+               })
+        dispatch({ type:GET_PATIENT_CARE_TEAM})
+        axios.get('http://droobi.astrolabs.io:3020/patient/'+patientId+'/careTeam')
+              .then(response => {
+                  console.log('Response:',response)
+                  dispatch({type:GET_PATIENT_CARE_TEAM_SUCCESS,payload:response.data})
+
+              })
+              .catch(error=>{
+                 dispatch({type:GET_PATIENT_CARE_TEAM_FAILED,payload:error})
                })
   }
 };

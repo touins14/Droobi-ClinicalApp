@@ -7,9 +7,10 @@ import BeforeDinnerIcon from '../../images/Before-dinner.png';
 import BeforeLunchIcon from '../../images/Before-lunch.png';
 import BedtimeIcon from '../../images/Bedtime.png';
 import Icon from 'react-native-vector-icons/Ionicons';
+import strings from './Translation'
 
 
-const ItemMonitoring = ({ data,showIcon }) => {
+const ItemMonitoring = ({ data,showIcon,language }) => {
   const {
     cardStyle,
     itemContainer,
@@ -22,27 +23,31 @@ const ItemMonitoring = ({ data,showIcon }) => {
     statusConatiner,
     labelText,
     unitText } = styles;
+
+    let alignItems=language==='AR'?"flex-end":"flex-start"
+    let justifyContent=language==='AR'?"flex-end":"flex-start"
+    const flexDirection = language === 'AR' ? 'row-reverse' : 'row'
   return (
     <View style={{ alignSelf:'stretch'}}>
-    {data.map(item=>
+    {data.map((item,i)=>
       item.status===true?
-        <View style={itemContainer}>
-          <View><Text style={title}>{item.name}</Text></View>
-          <View style={textIconConatiner}>
+        <View key={i} style={itemContainer}>
+          <View style={{alignItems:alignItems}}><Text style={title}>{language==="EN"?item.name:item.arName}</Text></View>
+          <View style={[textIconConatiner,{  flexDirection: flexDirection}]}>
             
                         <View style={statusConatiner}>
                          {showIcon===true?<Icon name="ios-radio-button-on" size={16} color='#E70001' />:null}
                         </View>
-            <View style={timeIconContainer}>
+            <View style={[timeIconContainer,{justifyContent: justifyContent}]}>
               <Image source={{uri:"http://droobi.astrolabs.io/glucose_service/public/meals_icons/"+item.name+".png"}} style={timeIcon} resizeMode='contain' />
             </View>
-            <View style={textInfoContainer}>
-              <View style={texInfotRow}>
-                <Text style={labelText}>Target:</Text>
+          <View style={[textInfoContainer,{alignItems: alignItems}]}>
+              <View style={[texInfotRow,{flexDirection: flexDirection}]}>
+                <Text style={labelText}>{strings.target}</Text>
                 <Text style={unitText}>{item.max}-{item.min} mg/dL</Text>
               </View>
-              <View style={texInfotRow}>
-                <Text style={labelText}>Frequency:</Text>
+              <View style={[texInfotRow,{flexDirection:flexDirection}]}>
+                <Text style={labelText}>{strings.frequency}</Text>
                 <Text style={unitText}>Daily</Text>
               </View>
             </View>
@@ -71,7 +76,7 @@ const styles = {
     color: 'grey'
   },
   textIconConatiner: {
-    flexDirection: 'row',
+  
     justifyContent: 'flex-start'
   },
   statusConatiner: {
@@ -81,26 +86,27 @@ const styles = {
   },
   timeIconContainer: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    
     alignItems: 'center',
     flex: 1
   },
   textInfoContainer: {
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'flex-start',
+    
     flex: 2
   },
   texInfotRow: {
     flex: 1,
-    flexDirection: 'row',
+    
     justifyContent: 'space-between'
   },
   labelText: {
     color: '#424242'
   },
   unitText: {
-    paddingLeft: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
     color: '#a0a0a0'
   },
   timeIcon: {

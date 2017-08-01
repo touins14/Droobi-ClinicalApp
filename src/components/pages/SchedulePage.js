@@ -3,6 +3,7 @@ import { Text, View ,ScrollView} from 'react-native';
 import { connect } from 'react-redux';
 import {Container,ItemMonitoring} from '../common';
 import { getReportSchedule,getPatientSchedule} from "../../actions/DoctorAction";
+import strings from '../common/Translation';
 
 
 class SchedulePage extends Component {
@@ -16,39 +17,46 @@ class SchedulePage extends Component {
       this.props.getPatientSchedule(this.props.PatientId);
   }
   render() {
-    console.log('hajouraaaaaaaa',this.props.PatientMonitoring,this.props.ReportMonitoring)
+        let alignItems=this.props.language==='AR'?"flex-end":"flex-start"
+
     return (
       <View style={{paddingTop:20}}>
-        <View style={styles.titleContainer}>
-            <Text style={styles.titleStyle}>Suggested Monitoring</Text>
+        <View style={[styles.titleContainer,{alignItems:alignItems}]}>
+            {this.props.suggestedMonitoring===true?<Text style={styles.titleStyle}>{strings.suggestedMonitoring}</Text>:null}
         </View>
         {this.props.loaderReportMonitoring===false?
         <View style={[styles.globalContainer,{borderColor:"rgb(227, 80, 108)",borderWidth:1,}]}>
             
               <ItemMonitoring  data={Object.keys(this.props.ReportMonitoring.times).map(key => this.props.ReportMonitoring.times[key])}
                                showIcon={this.props.ReportMonitoring.status==='pending'?true:false}
+                               language={this.props.language}
               /> 
         </View>:null}
-        <View style={styles.titleContainer}>
-            <Text style={styles.titleStyle}>Current Monitoring</Text>
+        <View style={[styles.titleContainer,{alignItems:alignItems}]}>
+            <Text style={styles.titleStyle}>{strings.currentMonitoring}</Text>
         </View>
         {this.props.loaderPatientMonitoring===false?
           <View style={[styles.globalContainer,{borderColor:"#28c5c2",borderWidth:1,}]}>
-          {this.props.PatientMonitoring.map(item=>item.status==='current'?
+          {this.props.PatientMonitoring.map((item,i)=>item.status==='current'?
             
-              <ItemMonitoring  data={Object.keys(item.times).map(key => item.times[key])}
+              <ItemMonitoring  key={i}
+                               data={Object.keys(item.times).map(key => item.times[key])}
                                showIcon={false}
+                               language={this.props.language}
               /> 
             :null)}
         </View>:null}
-        <View style={styles.titleContainer}>
-            <Text style={styles.titleStyle}>Previous medication</Text>
+        <View style={[styles.titleContainer,{alignItems:alignItems}]}>
+            <Text style={styles.titleStyle}>{strings.previousMonitoring}</Text>
         </View>
         {this.props.loaderPatientMonitoring===false?
-           this.props.PatientMonitoring.map(item=>item.status==='finished'?
-          <View style={[styles.globalContainer]}>
-            <ItemMonitoring  data={Object.keys(item.times).map(key => item.times[key])}
+           this.props.PatientMonitoring.map((item,i)=>item.status==='finished'?
+          <View key={i} style={[styles.globalContainer]}>
+            <ItemMonitoring   
+                             key={i}
+                             data={Object.keys(item.times).map(key => item.times[key])}
                              showIcon={false}
+                             language={this.props.language}
             /> 
           </View>:null):null}
       </View>

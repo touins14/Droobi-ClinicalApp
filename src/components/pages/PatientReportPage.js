@@ -50,7 +50,7 @@ class PatientReportPage extends Component {
 	      case '3':
 	        return  <View style={styles.oneTab}>
 	                  <Image source={require('../../images/medicalGrey.png')} style={styles.oneTabImage} />
-	                  <Text style={[styles.oneTabLabel,{color:"#949799"}]}>Schedule</Text>
+	                  <Text style={[styles.oneTabLabel,{color:"#949799"}]}>{strings.schedule}</Text>
 	                </View>;
 	        return null;
 	    }
@@ -70,7 +70,7 @@ class PatientReportPage extends Component {
 	      case '3':
 	        return  <View style={styles.oneTab}>
 	                  <Image source={require('../../images/medicalGrey.png')} style={styles.oneTabImage} />
-	                  <Text style={[styles.oneTabLabel,{color:"#949799"}]}>Schedule</Text>
+	                  <Text style={[styles.oneTabLabel,{color:"#949799"}]}>{strings.schedule}</Text>
 	                </View>;
 	        return null;
 	    }
@@ -90,7 +90,7 @@ class PatientReportPage extends Component {
 	      case '3':
 	        return  <View style={styles.oneTab}>
 	                  <Image source={require('../../images/medicalGreen.png')} style={styles.oneTabImage} />
-	                  <Text style={[styles.oneTabLabel,{color:"#28c5c2"}]}>Schedule</Text>
+	                  <Text style={[styles.oneTabLabel,{color:"#28c5c2"}]}>{strings.schedule}</Text>
 	                </View>;
 	        return null;
 	    }
@@ -122,17 +122,17 @@ class PatientReportPage extends Component {
 	    switch (route.key) {
 	        case '1':
 		        return (
-			        <ProgressPage GoToListView={(filterday) => {navigate('ProgressListViewPage',{filterDay:filterday})}}/>
+			        <ProgressPage GoToListView={(filterday) => {navigate('ProgressListViewPage',{filterDay:filterday,ListViewTitle:strings.listView})}}/>
 		        );
 	        case '2':
 		        return (
-		            <MedicationPage ReportId={`${this.props.navigation.state.params.idReport}`} educatorName={this.props.loader===false?this.props.reportDetail[0].educator.firstName+'  '+this.props.reportDetail[0].educator.lastName:''}/>
+		            <MedicationPage ReportId={`${this.props.navigation.state.params.idReport}`} educatorName={this.props.loaderReportDetail===false?this.props.reportDetail[0].educator.firstName+'  '+this.props.reportDetail[0].educator.lastName:''} suggestedMedication={true}/>
 
 
 		        );
 		    case '3':
 		        return (
-		            <SchedulePage ReportId={`${this.props.navigation.state.params.idReport}`}/>
+		            <SchedulePage ReportId={`${this.props.navigation.state.params.idReport}`} suggestedMonitoring={true}/>
 		        );
 	        default:
 	            return null;
@@ -181,24 +181,22 @@ class PatientReportPage extends Component {
           }
 		        else return(
               <View style={styles.buttonsConfirmationContainer}>
-                <Button Style={styles.declineButton} color='#fff' label='Decline' onPress={() => { this.setState({ modalVisible: true, status: false});this.renderPopUp(false)}} />
-                {/* <Button Style={styles.declineButton} color='#fff'label='Decline' onPress={()=>{this.props.declineReport(idReport)}}/> */}
-                <Button Style={styles.approveButton} color='#fff' label='Approve' onPress={() => { this.setState({ modalVisible: true, status: true});this.renderPopUp(true)}} />
-                {/* <Button Style={styles.approveButton} color='#fff'label='Approve' onPress={()=>{this.props.approveReport(idReport)}}/> */}
+                <Button Style={styles.declineButton} color='#fff' label={strings.decline} onPress={() => { this.setState({ modalVisible: true, status: false});this.renderPopUp(false)}} />              
+                <Button Style={styles.approveButton} color='#fff' label={strings.approve} onPress={() => { this.setState({ modalVisible: true, status: true});this.renderPopUp(true)}} />                
               </View>
             )
 
     	}else {
-    		if(this.props.loader===true)
+    		if(this.props.loaderReportDetail===true)
                   {return null}
             else
 
             	if(this.props.reportDetail[0].report.status === 'declined' )
 		            	{
-		            	  return <Button Style={styles.declineButton} color='#fff'label='Decline' />
+		            	  return <Button Style={styles.declinedButton} color='rgb(227, 80, 108)' label={strings.reportDeclined} />
 		            	}
 		        else if(this.props.reportDetail[0].report.status=='accepted' )
-		        	   {return<Button Style={styles.approveButton} color='#fff'label='Approve' />}
+		        	   {return<Button Style={styles.approvedButton} color='rgb(40, 197, 194)' label={strings.reportApproved} />}
 		        else return null
     	}
     }
@@ -206,6 +204,9 @@ class PatientReportPage extends Component {
     	var idReport=`${this.props.navigation.state.params.idReport}`
 	    const { goBack } = this.props.navigation;
         const Patient=this.props.patientDetail;
+        const flexDirection = this.props.language === 'AR' ? 'row-reverse' : 'row';
+        const alignItems = this.props.language === 'AR' ? 'flex-end': 'flex-start';
+        const textAlign=this.props.language === 'AR' ? 'right': 'left';
 	    return (
 	        <Container>
 		        <ParallaxScrollView
@@ -228,28 +229,42 @@ class PatientReportPage extends Component {
 		            renderForeground={() => (
 		              <View key="parallax-header" style={ styles.parallaxHeader }>
 
-			                <View style={styles.headerDetail}>
+			                <View style={[styles.headerDetail,{flexDirection:flexDirection}]}>
 			                    <View style={styles.firstHeaderDetail}>
-			                        <Image  source={require('../../images/profilePhoto.jpg')}style={styles.profilePic}/>
+			                        <Image  source={{uri:'http://droobi.astrolabs.io/patient_service/public/pictures/'+Patient.picture}} style={styles.profilePic}/>
 			                        <Text style={styles.name}>{Patient.firstName}</Text>
 			                        <Text style={styles.name}>{Patient.lastName}</Text>
 			                    </View>
 			                    {
                                 this.props.LoaderPatientDetails==false?
 			                    <View style={styles.secondHeaderDetail}>
-			                         <DetailBloc FirstLabel='HC#' SecondLabel={Patient.hc}/>
-			                         <DetailBloc FirstLabel='Diabetic' SecondLabel={'Type'+Patient.diabetic.type}/>
-			                         <DetailBloc FirstLabel='hb1Ac' SecondLabel={Patient.hbA1c.value}/>
-			                         <DetailBloc FirstLabel='BMI' SecondLabel={Patient.bmi.value}/>
-			                         <DetailBloc FirstLabel='Cholestrol' SecondLabel={Patient.cholesterol.value}/>
+			                         <DetailBloc FirstLabel='HC#' SecondLabel={Patient.hc} flexDirection={flexDirection} alignItems={alignItems}/>
+			                         <DetailBloc FirstLabel='Diabetic' SecondLabel={'Type'+Patient.diabetic.type} flexDirection={flexDirection} alignItems={alignItems}/>
+			                         <DetailBloc FirstLabel='hb1Ac' SecondLabel={Patient.hbA1c.value} flexDirection={flexDirection} alignItems={alignItems}/>
+			                         <DetailBloc FirstLabel='BMI' SecondLabel={Patient.bmi.value} flexDirection={flexDirection} alignItems={alignItems}/>
+			                         <DetailBloc FirstLabel='Cholestrol' SecondLabel={Patient.cholesterol.value} flexDirection={flexDirection} alignItems={alignItems}/>
 			                    </View>:null}
 			                </View>
 			                <View style={styles.SubHeaderDetail}>
-			                  {this.props.loader===true?null:
-			                  	   <EducatorNoteBloc note={this.props.reportDetail[0].report.noteEd==null?"":this.props.reportDetail[0].report.noteEd}
-			                  			             image={require('../../images/profilePhoto.jpg')}
-			                  			             name={this.props.reportDetail[0].educator.firstName}
-			                  		/>}
+			                  {this.props.loaderReportDetail===true?null:
+
+			                  	   this.props.TypeUser==='doctor'?
+			                  	   	    <EducatorNoteBloc note={this.props.reportDetail[0].report.noteEd==null?"":this.props.reportDetail[0].report.noteEd}
+			                  			                  image={{uri:'http://droobi.astrolabs.io/medication_service/public/pictures/educators/'+this.props.reportDetail[0].educator.picture}}
+			                  			                  name={this.props.reportDetail[0].educator.firstName+' '+this.props.reportDetail[0].educator.lastName}
+			                  			                  flexDirection={flexDirection}
+			                  			                  textAlign={textAlign}
+			                  			                  />:
+
+   										<EducatorNoteBloc note={this.props.reportDetail[0].report.noteDr==null?"":this.props.reportDetail[0].report.noteDr}
+			                  			                  image={{uri:'http://droobi.astrolabs.io/medication_service/public/pictures/doctors/'+this.props.reportDetail[0].doctor.picture}}
+			                  			                  name={this.props.reportDetail[0].doctor.firstName+' '+this.props.reportDetail[0].doctor.lastName}
+			                  			                  flexDirection={flexDirection}
+			                  			                  textAlign={textAlign}/>
+			                  	    
+			                  	   }
+			                  	  
+			                  		
 			                </View>
 
 		              </View>
@@ -268,7 +283,7 @@ class PatientReportPage extends Component {
 		                   <Icon name='ios-arrow-back-outline' size={30} color="#fff"/>
 		                </TouchableOpacity>
 		                <View style={{flex:3,alignItems:'center',justifyContent:'center'}}>
-		                    <Text style={{fontSize:20,color:"#fff"}}>PatientReport</Text>
+		                    <Text style={{fontSize:20,color:"#fff"}}>{strings.patientReport}</Text>
 		                </View>
 		                <View style={{flex:1,alignItems:'center',justifyContent:'center'}}></View>
 
@@ -294,10 +309,11 @@ class PatientReportPage extends Component {
     }
 }
 const DetailBloc = (props) => {
+	
 	return (
-       <View style={styles.DetailBlocStyle}>
-           <View style={{flex:2}}><Text style={styles.textDetail}>{props.FirstLabel}</Text></View>
-           <View style={{flex:4}}><Text style={styles.textDetail}>{props.SecondLabel}</Text></View>
+       <View style={[styles.DetailBlocStyle,{flexDirection:props.flexDirection}]}>
+           <View style={{flex:2,alignItems:props.alignItems}}><Text style={styles.textDetail}>{props.FirstLabel}</Text></View>
+           <View style={{flex:4,alignItems:props.alignItems}}><Text style={styles.textDetail}>{props.SecondLabel}</Text></View>
        </View>
     );
 };
@@ -305,9 +321,9 @@ const EducatorNoteBloc = (props) => {
 	return (
        <View style={styles.EducatorNoteBlocStyle}>
             <View style={styles.noteContainer}>
-               <Text style={styles.noteText}>{props.note} </Text>
+               <Text style={[styles.noteText,{textAlign:props.textAlign}]}>{props.note} </Text>
             </View>
-            <View style={styles.noteCreactor}>
+            <View style={[styles.noteCreactor,{flexDirection:props.flexDirection}]}>
                 <Image  source={props.image}style={styles.noteCreatorImage}/>
                 <Text   style={styles.nameNoteCreator}>{props.name}</Text>
             </View>
@@ -362,7 +378,7 @@ const styles={
     headerDetail:{
      //backgroundColor:"#000",
      alignSelf:'stretch',
-     flexDirection:'row',
+     
      flex:3,
     },
     SubHeaderDetail:{
@@ -400,9 +416,9 @@ const styles={
     	alignSelf:'stretch',
     	borderBottomWidth:0.5,
     	borderBottomColor:"#fff",
-    	flexDirection:'row',
-
     	alignItems:'center',
+    	marginRight:10,
+    	marginLeft:10
     },
     textDetail:{
     	fontSize:14,
@@ -411,7 +427,6 @@ const styles={
     EducatorNoteBlocStyle:{
 
     	alignSelf:"stretch",
-          height:100,
           marginRight:15,
           marginLeft:15 ,
           marginTop:10,
@@ -424,15 +439,18 @@ const styles={
           shadowOpacity: 1.9
     },
     noteContainer:{
-    	padding:5
+    	padding:5,
+
     },
     noteText:{
     	fontSize:14,
     	color:'grey',
+
     },
     noteCreactor:{
+    	//backgroundColor:'pink',
     	padding:5,
-    	flexDirection:'row',
+    	
     	alignItems:'center'
     },
     noteCreatorImage:{
@@ -482,6 +500,29 @@ const styles={
 	  	fontSize:14,
 	  	marginTop:5,
 	},
+	declinedButton:{
+		alignSelf:'stretch',
+		height:40,
+        borderColor:"rgb(227, 80, 108)",
+        borderWidth:1,
+        marginRight:20,
+        marginLeft:20,
+        alignItems:'center',
+        justifyContent:'center',
+        borderRadius:10
+	},
+	approvedButton:{
+
+		alignSelf:'stretch',
+		height:40,
+        borderColor:'rgb(40, 197, 194)',
+        borderWidth:1,
+        marginRight:20,
+        marginLeft:20,
+        alignItems:'center',
+        justifyContent:'center',
+        borderRadius:10
+	}
 }
 const mapStateToProps= state =>{
   return{
@@ -490,6 +531,7 @@ const mapStateToProps= state =>{
     patientDetail:state.doctor.PatientDetails,
     reportDetail:state.doctor.ReportDetails,
     loader:state.doctor.loader,
+    loaderReportDetail:state.doctor.loaderReportDetail,
     LoaderPatientDetails:state.doctor.LoaderPatientDetails,
     TypeUser:state.auth.TypeUser,
   }

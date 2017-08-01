@@ -18,6 +18,7 @@ const Input = ({  value, onChangeText, placeholder, secureTextEntry,autoFocus,la
 		     onChangeText={onChangeText}
 		     style={[inputStyle,direction]}
 		     language={language}
+		     blurOnSubmit={true}
 
 	     />
     </View>

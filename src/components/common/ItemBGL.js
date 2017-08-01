@@ -15,6 +15,7 @@ const ItemBGL = ({ icon, label, language, defaultValue, blood }) => {
      } = styles;
      const directionCard = language === 'AR' ? 'row-reverse' : 'row';
      const alignItems = language === 'AR' ? 'flex-end' : 'flex-start';
+     const justifyContent = language === 'AR' ? 'flex-end' : 'flex-start';
      const textAlign = language === 'AR' ? 'right' : 'left';
 
      return (
@@ -22,10 +23,10 @@ const ItemBGL = ({ icon, label, language, defaultValue, blood }) => {
                <View style={timeIconContainer}>
                     <Image source={icon} style={timeIcon} resizeMode='contain' />
                </View>
-               <View style={titleContainer}>
+               <View style={[titleContainer,{justifyContent:justifyContent}]}>
                    <Text style={title}>{label}</Text>
                </View>
-               <View style={bloodValueContainer}>
+               <View style={[bloodValueContainer,{  flexDirection: directionCard,justifyContent: justifyContent}]}>
                  <Text style={[bloodValue, { textAlign }]} >
                     {defaultValue}
                  </Text>
@@ -60,7 +61,7 @@ const styles = {
      titleContainer: {
        flex: 1,
        flexDirection: 'row',
-       justifyContent: 'flex-start',
+       
        alignItems: 'center'
      },
      title: {
@@ -69,8 +70,6 @@ const styles = {
      },
      bloodValueContainer: {
        flex: 0,
-       flexDirection: 'row',
-       justifyContent: 'flex-start',
        alignItems: 'center',
        paddingHorizontal: 10
      },

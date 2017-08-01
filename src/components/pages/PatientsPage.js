@@ -3,6 +3,7 @@ import { Text, View ,ScrollView} from 'react-native';
 import { connect } from 'react-redux';
 import { Button ,ItemList} from '../common';
 import { getPatientList,getPatientEducatorList,SetIdPatient} from "../../actions/DoctorAction";
+import strings from '../common/Translation';
 
 class PatientsPage extends Component {
 
@@ -24,7 +25,8 @@ class PatientsPage extends Component {
               key={i}
               titleText={item.firstName}
               subTitleText={'HC'+item.hc}
-              onPress={() => {navigate('ProfilePatientPage'),this.props.SetIdPatient(item._id)}}
+              onPress={() => {navigate('ProfilePatientPage',{TitleProfilePage:strings.profile}),this.props.SetIdPatient(item._id)}}
+              language={this.props.language}
               />
         )}
       </ScrollView>

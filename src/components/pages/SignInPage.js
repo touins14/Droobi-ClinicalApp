@@ -49,13 +49,13 @@
     changelanguage(){
     if(this.props.language=="AR"){
         return(
-	        <TouchableOpacity style={{backgroundColor:"transparent"}} onPress={this.ChangeToEnglish.bind(this)}>
+	        <TouchableOpacity style={{backgroundColor:"transparent"}} onPress={()=>this.ChangeToEnglish()}>
 	            <Text style={{color:"#fff",fontSize:18,fontWeight:"400"}}>English</Text>
 	        </TouchableOpacity>
         )
     }
         return(
-	        <TouchableOpacity style={{backgroundColor:"transparent"}} onPress={this.ChangeToArabic.bind(this)}>
+	        <TouchableOpacity style={{backgroundColor:"transparent"}} onPress={()=>this.ChangeToArabic()}>
 		        <Text style={{color:"#fff",fontSize:18,fontWeight:"400"}}>عربي</Text>
 		    </TouchableOpacity>
         )
@@ -73,11 +73,14 @@
     		    LanguageContainer,
     		    LogoStyle
     		    
-    		  }=styles;
+    		  }=styles
         const { params } = this.props.navigation.state;
         const { navigate } = this.props.navigation;
         if (this.props.navigate==true&& this.props.loading==false){
-	    	navigate('tabsPage')
+	    	navigate('tabsPage',{reportsTitle:strings.reports,
+	    		                 PatientsPageTitle:strings.patients,
+	    		                 ChatPageTitle:strings.chat
+	    		                })
 	    }
         let direction=this.props.language==="AR"?"right":"left";
         let alignLanguage=this.props.language==="AR"?"flex-start":"flex-end";
@@ -135,14 +138,14 @@ const styles={
 	  paddingLeft:15
 	},
 	logoContainer:{
-		flex:2,
+		flex:0.8,
 		//backgroundColor:"#fff",
 		alignItems:'center',
 		justifyContent:'center'
 	},
 	LogoStyle:{
-		height:200,
-		width:200
+		height:100,
+		width:100
 	},
 	InputContainer:{
 		flex:4,

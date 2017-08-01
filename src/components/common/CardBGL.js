@@ -29,7 +29,7 @@ const CardBGL = ({ data, language }) => {
              return (
                <ItemBGL
                 icon={{uri:"http://droobi.astrolabs.io/glucose_service/public/meals_icons/"+item.name+".png"}} 
-                label={item.name}
+                label={language==='EN'?item.name:item.arName}
                 key={item.key}
                 defaultValue={item.value}
                 language={language}

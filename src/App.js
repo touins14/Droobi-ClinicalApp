@@ -19,12 +19,13 @@ import MedicalPatientPage from './components/pages/MedicalPatientPage';
 import ReadingPatientPage from './components/pages/ReadingPatientPage';
 import testPage from './components/pages/testPage';
 import AddNewReportPage from './components/pages/AddNewReportPage';
+import strings from './components/common/Translation';
 
 export const tabsNavigation = TabNavigator({
 	reports: {
 		screen: ReportsPage,
-		navigationOptions: {
-			title: 'Reports',
+		navigationOptions: ({navigation}) => ({
+			title: `${navigation.state.params.reportsTitle}`,
 			headerTintColor: '#fff',
 			tabBarIcon: ({ tintColor }) => (
 				<Image
@@ -33,14 +34,14 @@ export const tabsNavigation = TabNavigator({
 				/>
 			),
 			headerStyle: { backgroundColor: '#28c5c2' }
-		},
+		 }),
 		
 
 	},
 	patients: {
 		screen: PatientsPage,
-		navigationOptions: {
-			title: 'Patients',
+		navigationOptions: ({navigation}) => ({
+			title: `${navigation.state.params.PatientsPageTitle}`,
 			headerTintColor: '#fff',
 			tabBarIcon: ({ tintColor }) => (
 				<Image
@@ -49,15 +50,15 @@ export const tabsNavigation = TabNavigator({
 				/>
 			),
 			headerStyle: { backgroundColor: '#28c5c2' }
-		},
+		}),
 		gesturesEnabled:false,
         headerBackTitle:null,
 	},
 	chat: {
 		screen: ChatPage,
 
-		navigationOptions: {
-			title: 'chat',
+		navigationOptions: ({navigation}) => ({
+			title: `${navigation.state.params.ChatPageTitle}`,
 			headerTintColor: '#fff',
 			tabBarIcon: ({ tintColor }) => (
 				<Image
@@ -66,7 +67,7 @@ export const tabsNavigation = TabNavigator({
 				/>
 			),
 			headerStyle: { backgroundColor: '#28c5c2' }
-		},
+		}),
 		gesturesEnabled:false,
         headerBackTitle:null,
 	}
@@ -113,63 +114,64 @@ const Navigator = StackNavigator(
 		},
 		ProgressListViewPage: {
 			screen: ProgressListViewPage,
-			navigationOptions: {
-				title: 'List View',
+			navigationOptions: ({navigation}) => ({
+				title: `${navigation.state.params.ListViewTitle}`,
 			    headerTintColor: '#fff',
 				gesturesEnabled:false,
 	            headerBackTitle:null,
 	            headerStyle: { backgroundColor: '#28c5c2' }
-			}
+			})
 		},
 		ProfilePatientPage: {
 			screen: ProfilePatientPage,
-			navigationOptions: {
-				title: 'Profile',
+			navigationOptions:({navigation}) => ({
+				title: `${navigation.state.params.TitleProfilePage}`,
 			    headerTintColor: '#fff',
 				gesturesEnabled:false,
 	            headerBackTitle:null,
 	            headerStyle: { backgroundColor: '#28c5c2' }
-			}
+	        })
 		},
+		
 		ReportPatientPage: {
 			screen: ReportPatientPage,
-			navigationOptions: {
-				title: 'Patient Reports',
+			navigationOptions:({navigation}) => ({
+				title: `${navigation.state.params.ReportPatientPage}`,
 			    headerTintColor: '#fff',
 				gesturesEnabled:false,
 	            headerBackTitle:null,
 	            headerStyle: { backgroundColor: '#28c5c2' }
-			}
+			}),
 		},
 		MedicalPatientPage: {
 			screen: MedicalPatientPage,
-			navigationOptions: {
-				title: 'Medical Plan',
+			navigationOptions:({navigation}) => ({
+				title: `${navigation.state.params.MedicalPatientPage}`,
 			    headerTintColor: '#fff',
 				gesturesEnabled:false,
 	            headerBackTitle:null,
 	            headerStyle: { backgroundColor: '#28c5c2' }
-			}
+			}),
 		},
 		ReadingPatientPage: {
 			screen: ReadingPatientPage,
-			navigationOptions: {
-				title: 'Progress',
+			navigationOptions:({navigation}) => ({
+				title: `${navigation.state.params.ReadingPatientPage}`,
 			    headerTintColor: '#fff',
 				gesturesEnabled:false,
 	            headerBackTitle:null,
 	            headerStyle: { backgroundColor: '#28c5c2' }
-			}
+			}),
 		},
 		AddNewReportPage: {
 			screen: AddNewReportPage,
-			navigationOptions: {
-				title: 'New Report',
+			navigationOptions:({navigation}) => ({
+				title: `${navigation.state.params.newReportPage}`,
 			    headerTintColor: '#fff',
 				gesturesEnabled:false,
 	            headerBackTitle:null,
 	            headerStyle: { backgroundColor: '#28c5c2' }
-			}
+			}),
 		},
 		testPage: {
 			screen: testPage,
@@ -180,7 +182,7 @@ const Navigator = StackNavigator(
 	            headerBackTitle:null,
 	            headerStyle: { backgroundColor: '#28c5c2' }
 			}
-		},
+		}
 	},
     {
 			initialRouteName: 'SignInPage',
