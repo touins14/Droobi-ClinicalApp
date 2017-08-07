@@ -28,7 +28,7 @@ class SchedulePage extends Component {
         <View style={[styles.globalContainer,{borderColor:"rgb(227, 80, 108)",borderWidth:1,}]}>
             
               <ItemMonitoring  data={Object.keys(this.props.ReportMonitoring.times).map(key => this.props.ReportMonitoring.times[key])}
-                               showIcon={this.props.ReportMonitoring.status==='pending'?true:false}
+                               showIcon={false}
                                language={this.props.language}
               /> 
         </View>:null}
@@ -65,14 +65,15 @@ class SchedulePage extends Component {
 }
 const styles={
   globalContainer:{
-     alignSelf:'stretch',
+       alignSelf:'stretch',
        justifyContent:'center',
        alignItems:'center',
        marginRight:5,
        marginLeft:5 ,
        marginTop:10,
        marginBottom:10,
-       padding:5,
+       paddingLeft:5,
+       paddingRight:5,
        borderRadius:5,
        shadowColor: '#ddd',
        shadowOffset: {

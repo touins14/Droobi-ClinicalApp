@@ -1,14 +1,45 @@
 import React, { Component } from 'react';
-import { Text, View,Dimensions,Image } from 'react-native';
+import { Text, View,Dimensions,Image,Animated,TouchableOpacity,ScrollView} from 'react-native';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { connect } from 'react-redux';
 import {Container,Button,ProfileElement} from '../common';
 import strings from '../common/Translation';
 import {getPatientDetails} from "../../actions/DoctorAction";
+import Modal from 'react-native-modal'
 
 class ProfilePatientPage extends Component {
+  constructor(props) {
+      super();
+      this.state = {
+        showModal:false
+      };
+  }
   componentWillMount(){
     this.props.getPatientDetails(this.props.PatientId);
+  }
+  IsModalVisible(value){
+    this.setState({showModal:value})
+  }
+  renderImageModal(){
+    const Patient = this.props.patientDetail;
+    return(
+      
+        <Modal isVisible={this.state.showModal}
+               backdropColor='transparent'
+               animationIn='fadeIn'
+               animationOut='fadeOut'
+               animationOutTiming={400}
+               
+
+               >
+          <TouchableOpacity style={styles.viewStyle}
+                            onPress={()=>{this.IsModalVisible(false)}}>
+            <Image source={{ uri: 'http://droobi.astrolabs.io/patient_service/public/pictures/'+Patient.picture }} style={styles.GrowPic}/>
+            
+          </TouchableOpacity>
+        </Modal>
+     
+    )
   }
   render() {
 
@@ -20,92 +51,73 @@ class ProfilePatientPage extends Component {
       const textAlign=this.props.language === 'AR' ? 'right': 'left';
     return (
     	<Container>
-            <ParallaxScrollView
-		            headerBackgroundColor="#fff"
-		            stickyHeaderHeight={ 70 }
-		            parallaxHeaderHeight={ PARALLAX_HEADER_HEIGHT }
-		            backgroundSpeed={10}
+        <View key="parallax-header" style={ styles.parallaxHeader }>
+          <View style={[styles.headerDetail,{flexDirection:flexDirection}]}>
+			      <View style={styles.firstHeaderDetail}>
+			        <TouchableOpacity onPress={()=>{this.IsModalVisible(true)}}>
+                <Image source={{ uri: 'http://droobi.astrolabs.io/patient_service/public/pictures/'+Patient.picture }} style={styles.profilePic}/>
+              </TouchableOpacity>
+                              
+			        <Text style={styles.name}>{Patient.firstName}</Text>
+			        <Text style={styles.name}>{Patient.lastName}</Text>
+			      </View>
+			      {
+              this.props.LoaderPatientDetails==false?
+                <View style={styles.secondHeaderDetail}>
+			            <DetailBloc FirstLabel='HC#' SecondLabel={Patient.hc} flexDirection={flexDirection} alignItems={alignItems}/>
+			            <DetailBloc FirstLabel='Diabetic' SecondLabel={'Type'+Patient.diabetic.type} flexDirection={flexDirection} alignItems={alignItems}/>
+			            <DetailBloc FirstLabel='hb1Ac' SecondLabel={this.props.language=="EN"?Patient.hbA1c.value+' %':' %'+Patient.hbA1c.value} flexDirection={flexDirection} alignItems={alignItems}/>
+			            <DetailBloc FirstLabel='BMI' SecondLabel={Patient.bmi.value} flexDirection={flexDirection} alignItems={alignItems}/>
+			            <DetailBloc FirstLabel='Cholestrol' SecondLabel={Patient.cholesterol.value} flexDirection={flexDirection} alignItems={alignItems}/>
+			          </View>:null}
+              {this.renderImageModal()
+            }
+			    </View>
+        </View>
+		          
+		    <ScrollView >
+		      <View style={[styles.titleStyleContainer,{alignItems:alignItems}]}>
+		          <Text style={styles.titleStyle}>{strings.careTeam}</Text>
+		      </View>
+          {this.props.loaderPatientCareTeam===false?
+            <View style={styles.CareTeamContainer}>
+              <CareTeam firstLabel={this.props.PatientCareTeam.doctor.firstName +' '+this.props.PatientCareTeam.doctor.lastName}
+                        secondlabel={strings.doctor}
+                        image={{uri:'http://droobi.astrolabs.io/medication_service/public/pictures/doctors/'+this.props.PatientCareTeam.doctor.picture}}
+                        flexDirection={flexDirection}
+                        alignItems={alignItems}/>
 
-		            renderBackground={() => (
-		              <View key="background">
-
-		                <View style={{position: 'absolute',
-		                              top: 0,
-		                              width: window.width,
-		                              backgroundColor: '#fff',
-		                              height: PARALLAX_HEADER_HEIGHT}}/>
-		              </View>
-		            )}
-
-		            renderForeground={() => (
-		              <View key="parallax-header" style={ styles.parallaxHeader }>
-
-			                <View style={[styles.headerDetail,{flexDirection:flexDirection}]}>
-			                    <View style={styles.firstHeaderDetail}>
-			                        <Image source={{ uri: 'http://droobi.astrolabs.io/patient_service/public/pictures/'+Patient.picture }} style={styles.profilePic}/>
-			                        <Text style={styles.name}>{Patient.firstName}</Text>
-			                        <Text style={styles.name}>{Patient.lastName}</Text>
-			                    </View>
-			                    {
-                                this.props.LoaderPatientDetails==false?
-                                <View style={styles.secondHeaderDetail}>
-			                         <DetailBloc FirstLabel='HC#' SecondLabel={Patient.hc} flexDirection={flexDirection} alignItems={alignItems}/>
-			                         <DetailBloc FirstLabel='Diabetic' SecondLabel={'Type'+Patient.diabetic.type} flexDirection={flexDirection} alignItems={alignItems}/>
-			                         <DetailBloc FirstLabel='hb1Ac' SecondLabel={Patient.hbA1c.value} flexDirection={flexDirection} alignItems={alignItems}/>
-			                         <DetailBloc FirstLabel='BMI' SecondLabel={Patient.bmi.value} flexDirection={flexDirection} alignItems={alignItems}/>
-			                         <DetailBloc FirstLabel='Cholestrol' SecondLabel={Patient.cholesterol.value} flexDirection={flexDirection} alignItems={alignItems}/>
-			                    </View>:null}
-
-			                </View>
-
-
-		              </View>
-		            )}>
-		          <View style={{marginTop:20}}>
-		            <View style={[styles.titleStyleContainer,{alignItems:alignItems}]}>
-		                <Text style={styles.titleStyle}>{strings.careTeam}</Text>
-		            </View>
-                {this.props.loaderPatientCareTeam===false?
-                  <View style={styles.CareTeamContainer}>
-                    <CareTeam firstLabel={this.props.PatientCareTeam.doctor.firstName +' '+this.props.PatientCareTeam.doctor.lastName}
-                              secondlabel={strings.doctor}
-                              image={{uri:'http://droobi.astrolabs.io/medication_service/public/pictures/doctors/'+this.props.PatientCareTeam.doctor.picture}}
-                              flexDirection={flexDirection}
-                              alignItems={alignItems}/>
-
-                    <CareTeam firstLabel={this.props.PatientCareTeam.educator.firstName +' '+this.props.PatientCareTeam.educator.lastName}
-                              secondlabel={strings.educator}
-                              image={{uri:'http://droobi.astrolabs.io/medication_service/public/pictures/educators/'+this.props.PatientCareTeam.educator.picture}}
-                              flexDirection={flexDirection}
-                              alignItems={alignItems}/>
-                </View>:null
-                }
-		            
-		            <View style={[styles.titleStyleContainer,{alignItems:alignItems}]}>
-		                <Text style={styles.titleStyle}>{strings.medicalSituation}</Text>
-		            </View>
-		            <ProfileElement
-	                            showFirstIcon={true}
-	                            iconOne={require('../../images/graphGreen.png')}
-	                            labelOne={strings.readingHistory}
-	                            icontwo={require('../../images/syringeGreen.png')}
-	                            labeltwo={strings.healthPlan}
-	                            iconthree={require('../../images/careplan.png')}
-	                            labelthree={strings.reports}
-	                            title={strings.medical}
-	                            goReading={() => navigate('ReadingPatientPage',{ReadingPatientPage:strings.readingHistory})}
-                              goMedical={() => navigate('MedicalPatientPage',{MedicalPatientPage:strings.healthPlan})}
-                              goReports={() => navigate('ReportPatientPage',{ReportPatientPage:strings.reports})}
-                              language={this.props.language}
-	                            />
-		          </View>
-                  {this.props.TypeUser=='doctor'?null:
-                     <Button 
-                             Style={styles.newReportButton}
-                             color='#fff'
-                             label={strings.newReport}
-                             onPress={() => navigate('AddNewReportPage',{newReportPage:strings.newReport})}/>}
-		    </ParallaxScrollView>
+              <CareTeam firstLabel={this.props.PatientCareTeam.educator.firstName +' '+this.props.PatientCareTeam.educator.lastName}
+                        secondlabel={strings.educator}
+                        image={{uri:'http://droobi.astrolabs.io/medication_service/public/pictures/educators/'+this.props.PatientCareTeam.educator.picture}}
+                        flexDirection={flexDirection}
+                        alignItems={alignItems}/>
+            </View>:null
+          }
+		      <View style={[styles.titleStyleContainer,{alignItems:alignItems}]}>
+		        <Text style={styles.titleStyle}>{strings.medicalSituation}</Text>
+		      </View>
+		      <ProfileElement
+	          showFirstIcon={true}
+	          iconOne={require('../../images/graphGreen.png')}
+	          labelOne={strings.readingHistory}
+	          icontwo={require('../../images/syringeGreen.png')}
+	          labeltwo={strings.healthPlan}
+	          iconthree={require('../../images/careplan.png')}
+	          labelthree={strings.reports}
+	          title={strings.medical}
+	          goReading={() => navigate('ReadingPatientPage',{ReadingPatientPage:strings.readingHistory})}
+            goMedical={() => navigate('MedicalPatientPage',{MedicalPatientPage:strings.healthPlan})}
+            goReports={() => navigate('ReportPatientPage',{ReportPatientPage:strings.reports})}
+            language={this.props.language}
+	        />
+		    </ScrollView>
+          {this.props.TypeUser=='doctor'?null:
+            <Button 
+              Style={styles.newReportButton}
+              color='#fff'
+              label={strings.newReport}
+              onPress={() => navigate('AddNewReportPage',{newReportPage:strings.newReport})}/>}
 		</Container>
     );
   }
@@ -125,7 +137,7 @@ const CareTeam= (props) => {
             <View style={{flex:1,alignItems:'center',justifyContent:"center"}}>
                 <Image  source={props.image}style={styles.CareTeamPic}/>
             </View>
-            <View style={{flex:4,justifyContent:'center',alignItems:props.alignItems}}>
+            <View style={{flex:4,justifyContent:'center',alignItems:props.alignItems,paddingLeft:10,paddingRight:10}}>
               <Text style={{color:'grey',fontSize:16}}>{props.firstLabel}</Text>
               <Text style={{color:'grey',fontSize:12}}>{props.secondlabel}</Text>
             </View>
@@ -133,26 +145,24 @@ const CareTeam= (props) => {
     );
 };
 const window = Dimensions.get('window');
-const PARALLAX_HEADER_HEIGHT = 170;
 const styles={
 
     parallaxHeader: {
 	    alignItems: 'flex-start',
 	    justifyContent:'flex-start',
-	    flex:1,
 	    flexDirection: 'column',
-	    paddingTop: 2,
-	    paddingBottom:20,
+	    
+	    
+      backgroundColor:'black'
     },
     headerDetail: {
-    	//backgroundColor:"pink",
+    	backgroundColor:"pink",
      	alignSelf: 'stretch',
-      paddingBottom: 10,
       paddingRight: 8,
       backgroundColor: '#fff',
       shadowColor: 'rgba(162, 162, 162, 0.50)',
       shadowOffset: { width: 1, height: 1 },
-      shadowOpacity: 1,
+      shadowOpacity: 2,
       shadowRadius: 2,
 
     },
@@ -165,14 +175,15 @@ const styles={
 
     },
     firstHeaderDetail:{
-    	flex:2,
+    	flex:1.5,
     	alignItems:'center',
-    	justifyContent:'flex-start',
+    	justifyContent:'center',
     	paddingTop:10,
     },
     secondHeaderDetail:{
     	flex:3,
     	paddingTop:20,
+
     	flexDirection:"column",
     	alignItems:'flex-start',
     	justifyContent:'flex-start',
@@ -184,6 +195,12 @@ const styles={
         borderRadius:40,
         marginBottom:7
     },
+    GrowPic:{
+        height:150,
+        width:150,
+        borderRadius:75,
+        
+    },
     CareTeamPic:{
         height:50,
         width:50,
@@ -192,11 +209,11 @@ const styles={
     DetailBlocStyle:{
     	height:27,
     	alignSelf:'stretch',
-    	flexDirection:'row',
     	borderBottomColor:'#dcdcdc',
     	borderBottomWidth:0.5,
     	alignItems:'center',
-    	marginRight:10
+
+    	
     },
     textDetail:{
     	fontSize:14,
@@ -218,7 +235,8 @@ const styles={
         marginRight:25,
         marginTop:10,
         borderRadius:10,
-        padding:10,
+        paddingLeft:12,
+        paddingRight:12,
         marginBottom:10,
         shadowColor: 'rgba(162, 162, 162, 0.50)',
         shadowOffset: { width: 1, height: 1 },
@@ -242,7 +260,20 @@ const styles={
         alignItems:'center',
         justifyContent:'center',
         borderRadius:10
-    }
+    },
+ 
+     viewStyle:{
+        position:'absolute',
+        top:50,
+        left:-20,
+        right:-20,
+        height:165,
+        backgroundColor:"#fff",
+        alignItems:'center',
+        justifyContent:'center',
+        
+     },
+    
 
 }
 const mapStateToProps= state =>{

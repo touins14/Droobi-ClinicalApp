@@ -9,12 +9,16 @@
 
  const { width, height } = Dimensions.get('window')
  class SignInPage extends Component {
-
+    constructor(props) {
+    super(props);
+      module.hot.accept(() => { });
+    }
     static navigationOptions =({navigation})=>({
        header:null,
        headerBackTitle:null,
        gesturesEnabled:false,
     })
+
     onEmailChange(text){
         this.props.emailChanged(text);
     }

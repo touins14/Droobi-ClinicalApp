@@ -7,9 +7,9 @@ const Chart = ({ onPress,label ,Style,color,data,tickValues}) => {
 var data=[data]
 let options = {
     width: 300,
-    height: 250,
+    height: 150,
     color: '#28c5c2',
-     min:0,max:200,
+    min:0,max:400,
     margin: {
       top: 10,
       left: 35,
@@ -21,6 +21,7 @@ let options = {
       duration: 200
     },
     axisX: {
+     
      showAxis: false,
      showLines: false,
      showLabels: true,
@@ -28,9 +29,10 @@ let options = {
      zeroAxis: true,
      orient: 'bottom',
      tickValues:tickValues,
+     tickCount: 7,
       label: {
           fontFamily: 'Arial',
-          fontSize: 13,
+          fontSize: 10,
           fontWeight: false,
           fill: '#28c5c2',
           
@@ -53,7 +55,7 @@ let options = {
     }
   }
      return (
-          <View>    
+          <View style={{alignSelf:'stretch',justifyContent:'center',alignItems:'center',padding:20}}>    
                <StockLine data={data} options={options} xKey='x' yKey='y' />     
           </View>
         );

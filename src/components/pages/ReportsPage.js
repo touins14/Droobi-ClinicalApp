@@ -40,7 +40,7 @@ class ReportsPage extends Component {
       
       <ScrollView style={{backgroundColor:"#fff",paddingTop:20}}>
        
-        {ListReport.map((item,i) =>
+        {ListReport.reverse().map((item,i) =>
           <ItemList 
               key={i}
               picture={item.patient.picture}

@@ -35,7 +35,7 @@ class ProgressPage extends Component {
     return (
       <View>
           <View style={styles.filterDay}>
-            <View style={{alignItems:alignItems}}><Text style={styles.titlStyle}>{strings.glucoseReading}</Text></View>
+            
             <View style={[styles.ButtonsDayContainer,{flexDirection:flexDirection}]}>
 	            <Button Style={[styles.DayButton, background7]}
                       color={color7}
@@ -78,76 +78,69 @@ class ProgressPage extends Component {
             <Swiper height={120}
                     showsButtons={true}
                     showsPagination={false}
-                    width={window.width-50}
+                    width={window.width-20}
                     loadMinimalSize={2}
                     loadMinimal={true}
                     nextButton={<Text style={styles.buttonText}>›</Text>}
                     prevButton={<Text style={styles.buttonText}>‹</Text>}>
-		        <View style={styles.slide}>
-              <Condition
-                label={strings.allCondition}
-                image={require('../../images/smoothie.png')}
-                clickedStyle={this.state.filterCondition==='All Conditions'?styles.clickedCondition:null}
-                onPress={()=>{this.setState({filterCondition:"All Conditions"})
-                this.props.getCharts(this.state.filterDay,"All Conditions",this.props.PatientId) }}
-              />
-              <Condition label={strings.beforeLunch}
-                             clickedStyle={this.state.filterCondition==='Before Lunch'?styles.clickedCondition:null}
-                             image={require('../../images/Before-lunch.png')}
-                             onPress={()=>{this.setState({filterCondition:"Before Lunch"})
-                             this.props.getCharts(this.state.filterDay,"Before Lunch",this.props.PatientId)
-                             }}
-              />
-              <Condition label={strings.afterLunch}
-                             clickedStyle={this.state.filterCondition==='After Lunch'?styles.clickedCondition:null}
-                             image={require('../../images/After-lunch.png')}
-                             onPress={()=>{this.setState({filterCondition:"After Lunch"})
-                             this.props.getCharts(this.state.filterDay,"After Lunch",this.props.PatientId)
-                             }}
-              />
-		        </View>
-		        <View style={styles.slide}>
-                  <Condition label={strings.afterBreakfast}
-                             clickedStyle={this.state.filterCondition==='After Breakfast'?styles.clickedCondition:null}
-                             image={require('../../images/After-breakfast.png')}
-                             onPress={()=>{this.setState({filterCondition:"After Breakfast"})
-                             this.props.getCharts(this.state.filterDay,"After Breakfast",this.props.PatientId)
-                             }}
+    		        <View style={styles.slide}>
+                  <Condition
+                    label={strings.allCondition}
+                    image={require('../../images/smoothie.png')}
+                    clickedStyle={this.state.filterCondition==='All Conditions'?styles.clickedCondition:null}
+                    onPress={()=>{this.setState({filterCondition:"All Conditions"})
+                    this.props.getCharts(this.state.filterDay,"All Conditions",this.props.PatientId) }}
                   />
-                  <Condition label={strings.beforeDinner}
-                             clickedStyle={this.state.filterCondition==='Before Dinner'?styles.clickedCondition:null}
-                             image={require('../../images/Before-dinner.png')}
-                             onPress={()=>{this.setState({filterCondition:"Before Dinner"})
-                             this.props.getCharts(this.state.filterDay,"Before Dinner",this.props.PatientId)
-                             }}
-                  />
-                  <Condition label={strings.bedtime}
-                             clickedStyle={this.state.filterCondition==='Bedtime'?styles.clickedCondition:null}
-                             image={require('../../images/Bedtime.png')}
-                             onPress={()=>{this.setState({filterCondition:"Bedtime"})
-
-                             this.props.getCharts(this.state.filterDay,"Bedtime",this.props.PatientId)
-                            }}
-                  />
-		        </View>
-		        <View style={[styles.slide,{justifyContent:'flex-start'}]}>
-
-		              {/* <Condition label='After Dinner'
-                             clickedStyle={this.state.filterCondition==='After Dinner'?styles.clickedCondition:null}
-                             image={require('../../images/Before-dinner.png')}
-                             onPress={()=>{this.setState({filterCondition:"After Dinner"})
-                             this.props.getCharts(this.state.filterDay,"After Dinner",this.props.PatientId)
-                             }}
-                  /> */}
                   <Condition label={strings.fasting}
-                             clickedStyle={this.state.filterCondition==='Fasting'?styles.clickedCondition:null}
-                             image={require('../../images/Fasting.png')}
-                             onPress={()=>{this.setState({filterCondition:"Fasting"})
-                             this.props.getCharts(this.state.filterDay,"Fasting",this.props.PatientId)
-                             }}
+                                 clickedStyle={this.state.filterCondition==='Fasting'?styles.clickedCondition:null}
+                                 image={require('../../images/Fasting.png')}
+                                 onPress={()=>{this.setState({filterCondition:"Fasting"})
+                                 this.props.getCharts(this.state.filterDay,"Fasting",this.props.PatientId)
+                                 }}
+                      />
+                  <Condition label={strings.beforeLunch}
+                                 clickedStyle={this.state.filterCondition==='Before Lunch'?styles.clickedCondition:null}
+                                 image={require('../../images/Before-lunch.png')}
+                                 onPress={()=>{this.setState({filterCondition:"Before Lunch"})
+                                 this.props.getCharts(this.state.filterDay,"Before Lunch",this.props.PatientId)
+                                 }}
                   />
+                 
+    		        </View>
+    		        <View style={styles.slide}>
+                      <Condition label={strings.afterLunch}
+                                 clickedStyle={this.state.filterCondition==='After Lunch'?styles.clickedCondition:null}
+                                 image={require('../../images/After-lunch.png')}
+                                 onPress={()=>{this.setState({filterCondition:"After Lunch"})
+                                 this.props.getCharts(this.state.filterDay,"After Lunch",this.props.PatientId)
+                                 }}
+                      />
+                      <Condition label={strings.beforeDinner}
+                                 clickedStyle={this.state.filterCondition==='Before Dinner'?styles.clickedCondition:null}
+                                 image={require('../../images/Before-dinner.png')}
+                                 onPress={()=>{this.setState({filterCondition:"Before Dinner"})
+                                 this.props.getCharts(this.state.filterDay,"Before Dinner",this.props.PatientId)
+                                 }}
+                      />
+                      <Condition label={strings.postDinner}
+                                 clickedStyle={this.state.filterCondition==='Post Dinner'?styles.clickedCondition:null}
+                                 image={require('../../images/After-breakfast.png')}
+                                 onPress={()=>{this.setState({filterCondition:"Post Dinner"})
+                                 this.props.getCharts(this.state.filterDay,"After Dinner",this.props.PatientId)
+                                 }}
+                      />
+                      
+    		        </View>
+    		        <View style={[styles.slide]}>
+    		              <Condition label={strings.bedtime}
+                                 clickedStyle={this.state.filterCondition==='Bedtime'?styles.clickedCondition:null}
+                                 image={require('../../images/Bedtime.png')}
+                                 onPress={()=>{this.setState({filterCondition:"Bedtime"})
 
-		        </View>
+                                 this.props.getCharts(this.state.filterDay,"Bedtime",this.props.PatientId)
+                                }}
+                      />
+    		        </View>
 
 		      </Swiper>
 
@@ -258,7 +251,7 @@ const styles={
 
   	},
   	condition:{
-  		width:100,
+  		width:80,
   	},
     clickedCondition:{
       backgroundColor:'rgba(184,233,232,0.3)',
@@ -292,9 +285,11 @@ const styles={
   	slide: {
   		justifyContent:"center",
   		alignItems:'center',
-          height:120,
-      	flexDirection:'row',
-      	//backgroundColor: '#ddd',
+      alignSelf:'stretch',
+      height:120,
+      flexDirection:'row',
+     // backgroundColor: '#ddd',
+     
       },
       StatisticContainer:{
       	//backgroundColor:'black',

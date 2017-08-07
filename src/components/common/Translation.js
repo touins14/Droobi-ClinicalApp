@@ -74,10 +74,11 @@ let strings = new LocalizedStrings({
     glucoseReading:'Glucose Reading',
     "filterByCondition":"Filter By Condition",
     allCondition:'All Condition ',
-    beforeLunch:'Before Lunch',
-    afterLunch:'After Lunch',
+    beforeLunch:'Pre Lunch',
+    afterLunch:'Post Lunch',
     afterBreakfast:'After Breakfast',
-    beforeDinner:'Before Dinner',
+    beforeDinner:'Pre Dinner',
+    postDinner:'Post Dinner',
     bedtime:'Bedtime',
     fasting:'Fasting',
     chartView:"Chart View",
@@ -88,7 +89,7 @@ let strings = new LocalizedStrings({
     suggestedMonitoring:'Suggested Monitoring',
     currentMonitoring:'Current Monitoring',
     previousMonitoring:'Previous Monitoring',
-    medicalSituation:'Medical Situation',
+    medicalSituation:'Medical Data',
     readingHistory:"Reading History",
     healthPlan:'Health Plan',
     doctor:'Doctor',
@@ -97,7 +98,8 @@ let strings = new LocalizedStrings({
     patients:'Patients',
     reportDeclined:'Report Declined',
     reportApproved:'Report Approved',
-    newReport:'New Report'
+    newReport:'New Report',
+    reading:"Reading",
 
   },
   ar: {
@@ -194,7 +196,8 @@ let strings = new LocalizedStrings({
     patients:'المرضى',
     reportDeclined:'تقرير مرفوض',
     reportApproved:'تمت الموافقة على التقرير',
-    newReport:'تقرير جديد'
+    newReport:'تقرير جديد',
+    reading:"قراءة",
 
   }
 

@@ -64,8 +64,7 @@ const styles = {
     alignSelf:'stretch',
     height: 80,
     borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-    marginBottom: 5
+    borderBottomColor: '#ddd'
   },
   title: {
     fontSize: 16,

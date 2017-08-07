@@ -17,25 +17,31 @@ class MedicationPage extends Component {
     return extractedDate
   }
   renderMedication(){
-  
-      return this.props.ReportMedication.drugs.map(item=>
+    console.log('hajertest',this.props.ReportMedication.drugs)
+      if(this.props.loaderReportMedication===false){
+        return this.props.ReportMedication.drugs.map((item,i)=>
         <MedicationBlock
+          key={i}
           data={item}
           showIcon={this.props.ReportMedication.status==='pending'?true:false}
           
           language={this.props.language} />
       
       )
+      }
+      else return null
       
   }
 
   renderCurrentMedicationPatient() {
-    return this.props.PatientMedication.map(item=>
+    if(this.props.loaderReportPatient===false){
+    return this.props.PatientMedication.map((item)=>
       item.status==='current'?
 
       <View style={[styles.globalContainer,{borderColor:"#28c5c2",borderWidth:1,}]}>
           {item.drugs.map(item2=>
             <MedicationBlock
+              
               data={item2}
               showIcon={false}
               language={this.props.language} />
@@ -44,16 +50,18 @@ class MedicationPage extends Component {
         <View style={styles.educatorNameContainer}>
           <Text style={styles.nameEducStyle}>{this.props.educatorName} - {this.extratctDate(item.created_at)}</Text>
         </View>
-      </View>:null)
+      </View>:null)}else return null
       
   }
   renderPreviousMedicationPatient() {
-    return this.props.PatientMedication.map(item=>
+    if(this.props.loaderReportPatient===false){
+    return this.props.PatientMedication.map((item)=>
       item.status==="finished"?
 
       <View style={[styles.globalContainer,{borderColor:"#ddd",borderWidth:1,}]}>
           {item.drugs.map(item2=>
             <MedicationBlock
+              
               data={item2}
               showIcon={false}
               language={this.props.language} />
@@ -62,7 +70,7 @@ class MedicationPage extends Component {
         <View style={styles.educatorNameContainer}>
           <Text style={styles.nameEducStyle}>{this.props.educatorName} - {this.extratctDate(item.created_at)}</Text>
         </View>
-      </View>:null)
+      </View>:null)}else return null
       
   }
 

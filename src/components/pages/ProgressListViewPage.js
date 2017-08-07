@@ -62,7 +62,7 @@ class ProgressListViewPage extends Component {
     return (
       <Container>
       <ScrollView>
-          {this.props.listViewProgress.map(item =>
+          {this.props.listViewProgress.reverse().map(item =>
             <View style={styles.GlobalBlock} key={item._id}>
               <View style={{alignSelf:"stretch",alignItems:alignItems}}>
                 <Text style={{fontSize:16,color:'grey',marginLeft:15,marginRight:15}}>{this.getDate(item.dateGlucose)}</Text>
@@ -82,7 +82,8 @@ const styles={
         //backgroundColor:'pink',
         marginLeft:5,
         marginRight:5,
-        padding:5,
+        paddingRight:5,
+        paddingLeft:5,
         marginBottom:10,
 
   },

@@ -86,12 +86,14 @@ const styles = {
            marginRight:5,
            marginTop:10,
            borderRadius:10,
-           padding:10,
+           paddingLeft:10,
+           paddingRight:10,
            marginBottom:10,
 					 shadowColor: 'rgba(162, 162, 162, 0.50)',
 	         shadowOffset: { width: 1, height: 1 },
 	         shadowOpacity: 1,
-	         shadowRadius: 2
+	         shadowRadius: 2,
+           
 	},
 	OneItemContainer:{
 		height:40,

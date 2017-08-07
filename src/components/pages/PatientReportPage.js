@@ -40,7 +40,7 @@ class PatientReportPage extends Component {
 	      case '1':
 	        return  <View style={styles.oneTab}>
 	                  <Image source={require('../../images/graphGreen.png')} style={styles.oneTabImage} />
-	                  <Text style={[styles.oneTabLabel,{color:"#28c5c2"}]}>{strings.progress}</Text>
+	                  <Text style={[styles.oneTabLabel,{color:"#28c5c2"}]}>{strings.reading}</Text>
 	                </View>;
 	      case '2':
 	        return  <View style={styles.oneTab}>
@@ -50,7 +50,7 @@ class PatientReportPage extends Component {
 	      case '3':
 	        return  <View style={styles.oneTab}>
 	                  <Image source={require('../../images/medicalGrey.png')} style={styles.oneTabImage} />
-	                  <Text style={[styles.oneTabLabel,{color:"#949799"}]}>{strings.schedule}</Text>
+	                  <Text style={[styles.oneTabLabel,{color:"#949799"}]}>{strings.monitoring}</Text>
 	                </View>;
 	        return null;
 	    }
@@ -60,7 +60,7 @@ class PatientReportPage extends Component {
 	      case '1':
 	        return  <View style={styles.oneTab}>
 	                  <Image source={require('../../images/graphGrey.png')} style={styles.oneTabImage} />
-	                  <Text style={[styles.oneTabLabel,{color:"#949799"}]}>{strings.progress}</Text>
+	                  <Text style={[styles.oneTabLabel,{color:"#949799"}]}>{strings.reading}</Text>
 	                </View>;
 	      case '2':
 	        return  <View style={styles.oneTab}>
@@ -70,7 +70,7 @@ class PatientReportPage extends Component {
 	      case '3':
 	        return  <View style={styles.oneTab}>
 	                  <Image source={require('../../images/medicalGrey.png')} style={styles.oneTabImage} />
-	                  <Text style={[styles.oneTabLabel,{color:"#949799"}]}>{strings.schedule}</Text>
+	                  <Text style={[styles.oneTabLabel,{color:"#949799"}]}>{strings.monitoring}</Text>
 	                </View>;
 	        return null;
 	    }
@@ -80,7 +80,7 @@ class PatientReportPage extends Component {
 	      case '1':
 	        return  <View style={styles.oneTab}>
 	                  <Image source={require('../../images/graphGrey.png')} style={styles.oneTabImage} />
-	                  <Text style={[styles.oneTabLabel,{color:"#949799"}]}>{strings.progress}</Text>
+	                  <Text style={[styles.oneTabLabel,{color:"#949799"}]}>{strings.reading}</Text>
 	                </View>;
 	      case '2':
 	        return  <View style={styles.oneTab}>
@@ -90,7 +90,7 @@ class PatientReportPage extends Component {
 	      case '3':
 	        return  <View style={styles.oneTab}>
 	                  <Image source={require('../../images/medicalGreen.png')} style={styles.oneTabImage} />
-	                  <Text style={[styles.oneTabLabel,{color:"#28c5c2"}]}>{strings.schedule}</Text>
+	                  <Text style={[styles.oneTabLabel,{color:"#28c5c2"}]}>{strings.monitoring}</Text>
 	                </View>;
 	        return null;
 	    }
@@ -486,15 +486,16 @@ const styles={
         borderRadius:10
     },
     oneTab:{
-	  	flex:1,
-        alignSelf:'stretch',
+	  	
+        
 	  	flexDirection:"row",
         alignItems:'flex-start'
 	},
     oneTabImage:{
 	  	height:25,
 	  	width:25,
-        marginRight:10
+        marginRight:5,
+        marginLeft:5
 	},
     oneTabLabel:{
 	  	fontSize:14,
